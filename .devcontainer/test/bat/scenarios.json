@@ -1,0 +1,18 @@
+{
+    "no_cat_alias": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "bat": {
+                "aliasAsCat": false
+            }
+        }
+    },
+    "custom_theme": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "bat": {
+                "theme": "Dracula"
+            }
+        }
+    }
+}
