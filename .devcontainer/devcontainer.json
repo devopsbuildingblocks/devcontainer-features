@@ -26,6 +26,7 @@
         "./src/eza": {},
         "./src/bat": {},
         "./src/fzf": {},
+        "./src/delta": {},
     },
     "remoteUser": "vscode"
 }

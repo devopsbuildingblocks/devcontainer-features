@@ -1,0 +1,19 @@
+{
+    "with_git_config": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "delta": {
+                "configureGit": true,
+                "theme": "Dracula"
+            }
+        }
+    },
+    "side_by_side": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "delta": {
+                "features": "side-by-side"
+            }
+        }
+    }
+}
