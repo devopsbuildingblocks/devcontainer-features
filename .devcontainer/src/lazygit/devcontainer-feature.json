@@ -1,0 +1,44 @@
+{
+    "name": "Lazygit",
+    "id": "lazygit",
+    "version": "0.1.0",
+    "description": "Installs lazygit, a simple terminal UI for git commands, via devbox global",
+    "documentationURL": "https://github.com/jesseduffield/lazygit",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "0", "0.57", "0.57.0"],
+            "default": "latest",
+            "description": "Version of lazygit to install"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": [
+                "db2-dark",
+                "db2",
+                "db2-light",
+                "default",
+                "tokyo-night-vibrant",
+                "tokyo-night",
+                "catppuccin-mocha",
+                "nord",
+                "dracula",
+                "gruvbox-dark",
+                "solarized-dark",
+                "github-dark",
+                "one-dark"
+            ],
+            "default": "db2-dark",
+            "description": "Color theme for lazygit UI (includes branchColors and theme configuration)"
+        },
+        "enableGitDiffPager": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable pager for git diff viewing in lazygit"
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    }
+}

@@ -27,6 +27,7 @@
         "./src/bat": {},
         "./src/fzf": {},
         "./src/delta": {},
+        "./src/lazygit": { "enableGitDiffPager": true },
     },
     "remoteUser": "vscode"
 }

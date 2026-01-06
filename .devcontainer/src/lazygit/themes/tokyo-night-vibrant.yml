@@ -1,0 +1,32 @@
+branchColors:
+  "bugfix": "#DB4B4B"
+  "chore": "#7AA2F7"
+  "docs": "#7AA2F7"
+  "feat": "#27A1B9"
+  "feature": "#27A1B9"
+  "fix": "#DB4B4B"
+theme:
+  activeBorderColor:
+    - "#FF9E64"
+    - "bold"
+  cherryPickedCommitBgColor:
+    - "#BB9AF7"
+  cherryPickedCommitFgColor:
+    - "#7AA2F7"
+  defaultFgColor:
+    - "#C0CAF5"
+  inactiveBorderColor:
+    - "#27A1B9"
+  markedBaseCommitBgColor:
+    - "#E0AF68"
+  markedBaseCommitFgColor:
+    - "#7AA2F7"
+  optionsTextColor:
+    - "#7AA2F7"
+  searchingActiveBorderColor:
+    - "#FF9E64"
+    - "bold"
+  selectedLineBgColor:
+    - "#283457"
+  unstagedChangesColor:
+    - "#DB4B4B"
