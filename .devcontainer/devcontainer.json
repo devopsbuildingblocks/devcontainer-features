@@ -28,6 +28,7 @@
         "./src/fzf": {},
         "./src/delta": {},
         "./src/lazygit": { "enableGitDiffPager": true },
+        "./src/claude": {}
     },
     "remoteUser": "vscode"
 }
