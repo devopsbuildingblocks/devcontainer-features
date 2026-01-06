@@ -1,0 +1,25 @@
+{
+    "name": "Oh My Posh",
+    "id": "oh-my-posh",
+    "version": "0.1.0",
+    "description": "Installs oh-my-posh, a prompt theme engine for any shell, via devbox global",
+    "documentationURL": "https://ohmyposh.dev/",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "26", "26.23", "26.23.6"],
+            "default": "latest",
+            "description": "Version of oh-my-posh to install"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": ["db2-dark.minimal", "db2-light.minimal", "db2"],
+            "default": "db2-dark.minimal",
+            "description": "Oh My Posh theme to use for prompt customization. You can specify any built-in oh-my-posh theme name here - they will be fetched from GitHub."
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    }
+}
