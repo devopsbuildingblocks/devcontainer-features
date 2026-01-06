@@ -1,0 +1,16 @@
+# Nord theme for fzf
+# Blue, Cyan Arctic tones
+
+fg:#d8dee9
+bg:-1
+hl:#ebcb8b
+fg+:#eceff4
+bg+:#434c5e
+hl+:#ebcb8b
+info:#81a1c1
+prompt:#bf616a
+pointer:#bf616a
+marker:#a3be8c
+spinner:#b48ead
+header:#81a1c1
+border:#5e81ac

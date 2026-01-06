@@ -1,0 +1,56 @@
+{
+    "name": "fzf",
+    "id": "fzf",
+    "version": "0.1.0",
+    "description": "Installs fzf, a general-purpose command-line fuzzy finder, via devbox global",
+    "documentationURL": "https://github.com/junegunn/fzf",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "0", "0.67", "0.67.0"],
+            "default": "latest",
+            "description": "Version of fzf to install"
+        },
+        "enableKeyBindings": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable shell key bindings (CTRL-T, CTRL-R, ALT-C)"
+        },
+        "enableCompletion": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable fuzzy auto-completion for bash/zsh"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": [
+                "none",
+                "db2-dark",
+                "db2-light",
+                "tokyo-night",
+                "one-dark",
+                "dracula",
+                "catppuccin",
+                "nord",
+                "gruvbox"
+            ],
+            "default": "db2-dark",
+            "description": "Color theme for fzf interface"
+        },
+        "defaultOptions": {
+            "type": "string",
+            "proposals": [
+                "",
+                "--height 40% --layout=reverse --border",
+                "--height 50% --layout=reverse --border --preview 'cat {}'",
+                "--tmux center"
+            ],
+            "default": "--height 40% --layout=reverse --border",
+            "description": "Default fzf options (FZF_DEFAULT_OPTS)"
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    }
+}

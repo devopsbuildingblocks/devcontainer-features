@@ -1,0 +1,16 @@
+# Tokyo Night theme for fzf
+# Cool blue and purple tones
+
+fg:#a9b1d6
+bg:-1
+hl:#e0af68
+fg+:#c0caf5
+bg+:#1a1b26
+hl+:#e0af68
+info:#7aa2f7
+prompt:#bb9af7
+pointer:#f7768e
+marker:#9ece6a
+spinner:#ff9e64
+header:#7dcfff
+border:#7aa2f7

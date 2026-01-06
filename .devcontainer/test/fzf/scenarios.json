@@ -1,0 +1,26 @@
+{
+    "no_keybindings": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "fzf": {
+                "enableKeyBindings": false
+            }
+        }
+    },
+    "custom_options": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "fzf": {
+                "defaultOptions": "--height 50% --layout=reverse --border --preview 'cat {}'"
+            }
+        }
+    },
+    "dracula_theme": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "fzf": {
+                "theme": "dracula"
+            }
+        }
+    }
+}

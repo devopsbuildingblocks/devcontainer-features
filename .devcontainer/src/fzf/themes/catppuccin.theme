@@ -1,0 +1,16 @@
+# Catppuccin Mocha theme for fzf
+# Pastel colors
+
+fg:#cdd6f4
+bg:-1
+hl:#f9e2af
+fg+:#cdd6f4
+bg+:#313244
+hl+:#f9e2af
+info:#89dceb
+prompt:#f5c2e7
+pointer:#f5c2e7
+marker:#a6e3a1
+spinner:#f5e0dc
+header:#74c7ec
+border:#b4befe

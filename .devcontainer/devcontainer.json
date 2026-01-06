@@ -25,6 +25,7 @@
         "./src/oh-my-posh": {},
         "./src/eza": {},
         "./src/bat": {},
+        "./src/fzf": {},
     },
     "remoteUser": "vscode"
 }
