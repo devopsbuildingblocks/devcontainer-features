@@ -1,0 +1,10 @@
+{
+    "custom_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "devbox": {
+                "version": "0.15.0"
+            }
+        }
+    }
+}

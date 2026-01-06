@@ -1,0 +1,42 @@
+{
+    "name": "Devbox",
+    "id": "devbox",
+    "version": "0.1.0",
+    "description": "Install devbox, a command-line tool that lets you easily create isolated shells for development using Nix",
+    "documentationURL": "https://www.jetify.com/docs/devbox",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "bin_dir": {
+            "type": "string",
+            "proposals": ["/usr/local/bin"],
+            "default": "/usr/local/bin",
+            "description": "Select a directory that is on your PATH"
+        },
+        "version": {
+            "type": "string",
+            "proposals": ["0.16.0"],
+            "default": "0.16.0",
+            "description": "Select a Devbox version"
+        }
+    },
+    "dependsOn": {
+        "./src/common-utils": {},
+        "ghcr.io/devcontainers/features/nix:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": ["jetpack-io.devbox"],
+            "settings": {
+                "devbox.autoShellOnTerminal": false,
+                "terminal.integrated.defaultProfile.linux": "devbox",
+                "terminal.integrated.profiles.linux": {
+                    "devbox": {
+                        "path": "/usr/bin/zsh",
+                        "args": ["-ic", "devbox shell -q"]
+                    }
+                }
+            }
+        }
+    },
+    "postCreateCommand": "devbox-postCreateCommand.sh"
+}
