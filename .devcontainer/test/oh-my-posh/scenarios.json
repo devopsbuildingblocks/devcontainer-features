@@ -1,0 +1,10 @@
+{
+    "custom_theme": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "oh-my-posh": {
+                "theme": "agnoster"
+            }
+        }
+    }
+}

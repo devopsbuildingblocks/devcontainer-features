@@ -1,0 +1,323 @@
+#!/usr/bin/env bash
+#
+# Common utilities for devcontainer feature scripts
+# This library provides reusable functions for feature installation scripts
+#
+
+set -e
+
+# Colors for output
+readonly COLOR_RESET='\033[0m'
+readonly COLOR_GREEN='\033[0;32m'
+readonly COLOR_YELLOW='\033[1;33m'
+readonly COLOR_RED='\033[0;31m'
+readonly COLOR_BLUE='\033[0;34m'
+
+#######################################
+# Print an info message
+# Arguments:
+#   Message to print
+#######################################
+log_info() {
+    echo -e "${COLOR_BLUE}[INFO]${COLOR_RESET} $*"
+}
+
+#######################################
+# Print a success message
+# Arguments:
+#   Message to print
+#######################################
+log_success() {
+    echo -e "${COLOR_GREEN}[SUCCESS]${COLOR_RESET} $*"
+}
+
+#######################################
+# Print a warning message
+# Arguments:
+#   Message to print
+#######################################
+log_warning() {
+    echo -e "${COLOR_YELLOW}[WARNING]${COLOR_RESET} $*"
+}
+
+#######################################
+# Print an error message
+# Arguments:
+#   Message to print
+#######################################
+log_error() {
+    echo -e "${COLOR_RED}[ERROR]${COLOR_RESET} $*" >&2
+}
+
+#######################################
+# Get the remote user, defaulting to root if not set
+# Outputs:
+#   The remote user name
+#######################################
+get_remote_user() {
+    echo "${_REMOTE_USER:-root}"
+}
+
+#######################################
+# Get the remote user's home directory
+# Outputs:
+#   The remote user's home directory path
+#######################################
+get_remote_user_home() {
+    if [ -n "${_REMOTE_USER_HOME}" ]; then
+        echo "${_REMOTE_USER_HOME}"
+    else
+        local user
+        user=$(get_remote_user)
+        if [ "$user" = "root" ]; then
+            echo "/root"
+        else
+            echo "/home/$user"
+        fi
+    fi
+}
+
+#######################################
+# Ensure the shellrc.d directory exists
+# Creates ~/.shellrc.d if it doesn't exist
+# Outputs:
+#   The shellrc.d directory path
+#######################################
+ensure_shellrc_dir() {
+    local user_home
+    user_home=$(get_remote_user_home)
+    local shellrc_dir="${user_home}/.shellrc.d"
+
+    if [ ! -d "$shellrc_dir" ]; then
+        log_info "Creating shellrc.d directory: $shellrc_dir"
+        mkdir -p "$shellrc_dir"
+
+        local user
+        user=$(get_remote_user)
+        if [ "$user" != "root" ]; then
+            chown -R "$user:$user" "$shellrc_dir"
+        fi
+    fi
+
+    echo "$shellrc_dir"
+}
+
+#######################################
+# Write a feature configuration script to ~/.shellrc.d
+# Arguments:
+#   Feature name (e.g., "lazygit")
+#   Content to write
+#######################################
+write_shellrc_feature() {
+    local feature_name="$1"
+    local content="$2"
+
+    if [ -z "$feature_name" ] || [ -z "$content" ]; then
+        log_error "write_shellrc_feature requires feature_name and content arguments"
+        return 1
+    fi
+
+    local shellrc_dir
+    shellrc_dir=$(ensure_shellrc_dir)
+    local feature_file="${shellrc_dir}/${feature_name}-feature.sh"
+
+    log_info "Writing shell configuration for $feature_name"
+    echo "$content" > "$feature_file"
+    chmod +x "$feature_file"
+
+    local user
+    user=$(get_remote_user)
+    if [ "$user" != "root" ]; then
+        chown "$user:$user" "$feature_file"
+    fi
+
+    log_success "Created $feature_file"
+}
+
+#######################################
+# Install a package using devbox global add
+# Arguments:
+#   Package specification (e.g., "lazygit@latest" or "gh@2.40.0")
+#######################################
+devbox_global_add() {
+    local package="$1"
+
+    if [ -z "$package" ]; then
+        log_error "devbox_global_add requires a package argument"
+        return 1
+    fi
+
+    # Ensure devbox is available
+    if ! command -v devbox &> /dev/null; then
+        log_error "devbox is not installed. Please ensure the devbox feature is installed first."
+        return 1
+    fi
+
+    # Set up environment for devbox
+    local user_home
+    user_home=$(get_remote_user_home)
+    local user
+    user=$(get_remote_user)
+
+    export XDG_DATA_HOME="${user_home}/.local/share"
+    export USER="$user"
+    export HOME="$user_home"
+
+    log_info "Installing $package via devbox global add"
+    devbox global add "$package"
+
+    # Ensure proper ownership of devbox directories
+    if [ "$user" != "root" ]; then
+        chown -R "$user:$user" "${user_home}/.local/share/devbox" 2>/dev/null || true
+    fi
+
+    # Refresh environment
+    log_info "Refreshing devbox environment"
+    eval "$(devbox global shellenv -r)"
+
+    log_success "Installed $package"
+}
+
+#######################################
+# Run a command as the remote user
+# Arguments:
+#   Command to run
+#######################################
+run_as_user() {
+    local user
+    user=$(get_remote_user)
+
+    if [ "$user" = "root" ]; then
+        bash -c "$*"
+    else
+        su - "$user" -c "$*"
+    fi
+}
+
+#######################################
+# Check if a command exists
+# Arguments:
+#   Command name
+# Returns:
+#   0 if command exists, 1 otherwise
+#######################################
+command_exists() {
+    command -v "$1" &> /dev/null
+}
+
+#######################################
+# Create a directory with proper ownership
+# Arguments:
+#   Directory path
+#######################################
+ensure_directory() {
+    local dir="$1"
+    local user
+    user=$(get_remote_user)
+
+    if [ ! -d "$dir" ]; then
+        mkdir -p "$dir"
+        if [ "$user" != "root" ]; then
+            chown -R "$user:$user" "$dir"
+        fi
+    fi
+}
+
+#######################################
+# Create a postCreateCommand script for volume-backed symlinks
+# Generates a script that creates symlinks from home directory to docker volume mounts
+# This allows persistent storage of configuration and data across container rebuilds
+#
+# Arguments:
+#   $1 - Feature name (e.g., "claude", "common-utils")
+#   $2+ - Paths to symlink (relative to home directory, e.g., ".cache" ".local" ".claude")
+#
+# The script will:
+#   1. Check if volume mount exists at /mnt/devcontainer-features/{feature-name}
+#   2. Create subdirectories in the mount for each path
+#   3. Merge existing content from home directory to volume
+#   4. Create symlinks from home directory to volume mount
+#
+# Example:
+#   create_volume_symlink_script "common-utils" ".cache" ".local"
+#   create_volume_symlink_script "claude" ".claude" ".claude.json"
+#######################################
+create_volume_symlink_script() {
+    local feature_name="$1"
+    shift
+    local paths=("$@")
+
+    if [ -z "$feature_name" ]; then
+        log_error "create_volume_symlink_script requires feature_name argument"
+        return 1
+    fi
+
+    if [ ${#paths[@]} -eq 0 ]; then
+        log_error "create_volume_symlink_script requires at least one path argument"
+        return 1
+    fi
+
+    local script_path="/usr/local/bin/${feature_name}-postCreateCommand.sh"
+    log_info "Creating volume symlink script for $feature_name"
+
+    # Start the script with header
+    cat > "$script_path" <<'SCRIPT_HEADER'
+#!/usr/bin/env bash
+#
+# Volume-backed Symlink Setup
+# Creates symlinks from home directory to docker volume mounts
+# This script is run as postCreateCommand to ensure persistence
+#
+SCRIPT_HEADER
+
+    # Add the feature-specific mount point check and setup
+    cat >> "$script_path" <<SCRIPT_BODY
+# Only create symlinks if mount point exists
+if [ -d /mnt/devcontainer-features/${feature_name} ]; then
+  sudo chown -R \${USER}:\${USER} /mnt/devcontainer-features/${feature_name}
+
+SCRIPT_BODY
+
+    # Add logic for each path
+    for path in "${paths[@]}"; do
+        # Determine if this is a file or directory based on extension
+        # Check if path ends with a known file extension (e.g., .json, .yml, .conf)
+        if [[ "$path" =~ \.(json|yml|yaml|conf|txt|toml|ini)$ ]]; then
+            # It's a file
+            cat >> "$script_path" <<SCRIPT_FILE
+  # Setup ${path} (file)
+  if [ ! -f /mnt/devcontainer-features/${feature_name}/${path} ]; then
+    echo "{}" > /mnt/devcontainer-features/${feature_name}/${path}
+  fi
+  if [ -f ~/${path} ] && [ ! -L ~/${path} ]; then
+      rm ~/${path}
+  fi
+  ln -sf /mnt/devcontainer-features/${feature_name}/${path} ~/${path}
+
+SCRIPT_FILE
+        else
+            # Treat as directory
+            cat >> "$script_path" <<SCRIPT_DIR
+  # Setup ${path} (directory)
+  if [ ! -d /mnt/devcontainer-features/${feature_name}/${path} ]; then
+    mkdir -p /mnt/devcontainer-features/${feature_name}/${path}
+  fi
+  # Merge existing content into volume mount
+  if [ -d ~/${path} ] && [ ! -L ~/${path} ]; then
+      sudo cp -r ~/${path}/* /mnt/devcontainer-features/${feature_name}/${path}/ 2>/dev/null || true
+      sudo rm -rf ~/${path}
+  fi
+  ln -sf /mnt/devcontainer-features/${feature_name}/${path} ~/${path}
+
+SCRIPT_DIR
+        fi
+    done
+
+    # Close the mount point check
+    cat >> "$script_path" <<'SCRIPT_FOOTER'
+fi
+SCRIPT_FOOTER
+
+    chmod +x "$script_path"
+    log_success "Created volume symlink script: $script_path"
+}

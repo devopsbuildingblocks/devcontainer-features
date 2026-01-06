@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  test:
+    dir: "{{.ROOT_DIR}}/.devcontainer"
+    vars:
+      FEATURES: |
+        {{ if .CLI_ARGS }}--features {{.CLI_ARGS}}{{ end }}
+    cmds:
+      - devcontainer features test {{.FEATURES}} -i mcr.microsoft.com/devcontainers/base:debian
+  docs:
+    dir: "{{.ROOT_DIR}}/.devcontainer/src"
+    cmds:
+      - devcontainer features generate-docs -n devopsbuildingblocks/devcontainer-features

@@ -1,0 +1,16 @@
+# One Dark theme for fzf
+# Atom One Dark colors
+
+fg:#abb2bf
+bg:-1
+hl:#e5c07b
+fg+:#c8ccd4
+bg+:#3e4451
+hl+:#e5c07b
+info:#61afef
+prompt:#c678dd
+pointer:#e06c75
+marker:#98c379
+spinner:#d19a66
+header:#56b6c2
+border:#61afef

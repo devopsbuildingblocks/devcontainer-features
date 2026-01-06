@@ -1,0 +1,34 @@
+{
+    "name": "Gemini CLI",
+    "id": "gemini",
+    "version": "0.1.0",
+    "description": "Installs gemini-cli and vscode extension",
+    "documentationURL": "https://geminicli.com/docs/",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "0", "0.22", "0.22.4"],
+            "default": "latest",
+            "description": "Version of gemini-cli to install"
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "google.geminicodeassist"
+            ]
+        }
+    },
+    "mounts": [
+        {
+            "source": "gemini",
+            "target": "/mnt/devcontainer-features/gemini",
+            "type": "volume"
+        }
+    ],
+    "postCreateCommand": "gemini-postCreateCommand.sh"
+}

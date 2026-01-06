@@ -1,0 +1,16 @@
+# Dracula theme for fzf
+# Purple, Pink, Cyan tones
+
+fg:#f8f8f2
+bg:-1
+hl:#bd93f9
+fg+:#f8f8f2
+bg+:#44475a
+hl+:#bd93f9
+info:#ffb86c
+prompt:#ff79c6
+pointer:#ff79c6
+marker:#50fa7b
+spinner:#ffb86c
+header:#6272a4
+border:#bd93f9

@@ -1,0 +1,17 @@
+# db2-light theme for fzf
+# Colors from db2-light.minimal oh-my-posh theme
+# Green #5F9E5F, Red #B8202E, Yellow #C09020, Blue #2B5A7D
+
+fg:#2B5A7D
+bg:-1
+hl:#C09020
+fg+:#1D2021
+bg+:#C09020
+hl+:#B8202E
+info:#B8202E
+prompt:#C09020
+pointer:#C09020
+marker:#5F9E5F
+spinner:#B8202E
+header:#C09020
+border:#2B5A7D

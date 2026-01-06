@@ -1,0 +1,45 @@
+{
+    "name": "Bat",
+    "id": "bat",
+    "version": "0.1.0",
+    "description": "Installs bat, a cat clone with syntax highlighting and Git integration, via devbox global",
+    "documentationURL": "https://github.com/sharkdp/bat",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "0", "0.26", "0.26.1"],
+            "default": "latest",
+            "description": "Version of bat to install"
+        },
+        "aliasAsCat": {
+            "type": "boolean",
+            "default": true,
+            "description": "Create an alias for cat to use bat (with plain style and no paging)"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": [
+                "Monokai Extended",
+                "Dracula",
+                "Nord",
+                "OneHalfDark",
+                "OneHalfLight",
+                "GitHub",
+                "gruvbox-dark",
+                "gruvbox-light",
+                "Solarized (dark)",
+                "Solarized (light)",
+                "TwoDark",
+                "Visual Studio Dark+",
+                "ansi",
+                "auto"
+            ],
+            "default": "TwoDark",
+            "description": "Color theme for bat syntax highlighting (use bat --list-themes to see all)"
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    }
+}

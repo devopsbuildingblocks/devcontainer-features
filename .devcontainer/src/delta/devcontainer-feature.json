@@ -1,0 +1,53 @@
+{
+    "name": "Delta",
+    "id": "delta",
+    "version": "0.1.0",
+    "description": "Installs delta, a syntax-highlighting pager for git, diff, and grep output, via devbox global",
+    "documentationURL": "https://github.com/dandavison/delta",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "0", "0.18", "0.18.2"],
+            "default": "latest",
+            "description": "Version of delta to install"
+        },
+        "configureGit": {
+            "type": "boolean",
+            "default": true,
+            "description": "Automatically configure git to use delta as the default pager"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": [
+                "auto",
+                "Dracula",
+                "GitHub",
+                "gruvbox-dark",
+                "gruvbox-light",
+                "Monokai Extended",
+                "Nord",
+                "OneHalfDark",
+                "Solarized (dark)",
+                "Solarized (light)",
+                "TwoDark"
+            ],
+            "default": "TwoDark",
+            "description": "Color theme for delta syntax highlighting (auto detects light/dark mode)"
+        },
+        "features": {
+            "type": "string",
+            "proposals": [
+                "default",
+                "side-by-side",
+                "line-numbers",
+                "decorations"
+            ],
+            "default": "default",
+            "description": "Delta feature set: default (basic), side-by-side (two-column diff), line-numbers, or decorations (commit info)"
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "with_icons": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "eza": {
+                "enableIcons": true
+            }
+        }
+    },
+    "light_theme": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "eza": {
+                "theme": "db2-light"
+            }
+        }
+    },
+    "no_aliases": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "eza": {
+                "aliasAsLs": false
+            }
+        }
+    }
+}

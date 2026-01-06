@@ -1,0 +1,18 @@
+{
+    "custom_theme": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "lazygit": {
+                "theme": "dracula"
+            }
+        }
+    },
+    "with_pager": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "lazygit": {
+                "enableGitDiffPager": true
+            }
+        }
+    }
+}

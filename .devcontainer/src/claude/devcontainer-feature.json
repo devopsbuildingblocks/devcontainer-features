@@ -1,0 +1,32 @@
+{
+    "name": "Claude Code",
+    "id": "claude",
+    "version": "0.1.0",
+    "description": "Installs claude-code and vscode extension",
+    "documentationURL": "https://docs.anthropic.com/en/docs/claude-code",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "2", "2.0", "2.0.76"],
+            "default": "latest",
+            "description": "Version of claude-code to install"
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": ["anthropic.claude-code"]
+        }
+    },
+    "mounts": [
+        {
+            "source": "claude",
+            "target": "/mnt/devcontainer-features/claude",
+            "type": "volume"
+        }
+    ],
+    "postCreateCommand": "claude-postCreateCommand.sh"
+}
