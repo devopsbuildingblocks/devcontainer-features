@@ -1,0 +1,54 @@
+{
+    "name": "Common Utilities",
+    "id": "common-utils",
+    "version": "0.1.0",
+    "description": "Create a default, non-root user, configure the shell, and volume mount important directories",
+    "documentationURL": "https://github.com/devopsbuildingblocks/devcontainer-features/tree/main/src/common-utils",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "dependsOn": {
+        "./src/lib": {},
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "configureZshAsDefaultShell": "true",
+            "installOhMyZsh": "false",
+            "installOhMyZshConfig": "false",
+            "username": "vscode",
+            "userUid": "1000",
+            "userGid": "1000"
+        }
+    },
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "terminal.integrated.defaultProfile.linux": "zsh",
+          "terminal.integrated.profiles.linux": {
+              "zsh": {
+                  "path": "/usr/bin/zsh"
+              },
+              "bash": {
+                  "path": "/usr/bin/bash"
+              }
+          },
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "extensions": ["esbenp.prettier-vscode"]
+      }
+    },
+    "mounts": [
+        {
+            "source": "cache-${devcontainerId}",
+            "target": "/mnt/devcontainer-features/common-utils/.cache",
+            "type": "volume"
+        },
+        {
+            "source": "local-${devcontainerId}",
+            "target": "/mnt/devcontainer-features/common-utils/.local",
+            "type": "volume"
+        },
+        {
+            "source": "shell-history-${devcontainerId}",
+            "target": "/mnt/devcontainer-features/common-utils/.shell_history",
+            "type": "volume"
+        }
+    ],
+    "postCreateCommand": "common-utils-postCreateCommand.sh"
+}
