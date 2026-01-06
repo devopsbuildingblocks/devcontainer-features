@@ -23,6 +23,7 @@
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
         "./src/oh-my-posh": {},
+        "./src/eza": {},
     },
     "remoteUser": "vscode"
 }

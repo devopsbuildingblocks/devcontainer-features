@@ -1,0 +1,35 @@
+{
+    "name": "Eza",
+    "id": "eza",
+    "version": "0.1.0",
+    "description": "Installs eza, a modern replacement for ls with Git integration and colorful output, via devbox global",
+    "documentationURL": "https://github.com/eza-community/eza",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "0", "0.23", "0.23.4"],
+            "default": "latest",
+            "description": "Version of eza to install"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": ["db2-dark", "db2-light", "none"],
+            "default": "db2-dark",
+            "description": "Color theme for eza (db2-dark, db2-light, or none for defaults)"
+        },
+        "aliasAsLs": {
+            "type": "boolean",
+            "default": true,
+            "description": "Create aliases for ls commands (ls, ll, la, lt, l) to use eza"
+        },
+        "enableIcons": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable icons in output (requires Nerd Fonts in terminal)"
+        }
+    },
+    "dependsOn": {
+        "./src/devbox": {}
+    }
+}
