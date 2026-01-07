@@ -90,12 +90,20 @@ create_postCreateCommand() {
   cat << 'EOF' > "$devcontainer_postCreateCommand"
 #!/bin/bash
 set -e
+
+# Run devbox commands
 if [ -f "devbox.json" ]; then
     echo "Found existing devbox.json, running devbox install..."
     devbox install
 else
     echo "No devbox.json found, initializing devbox..."
     devbox init
+fi
+
+# Fix ownership of devbox directories to ensure the remote user can access them
+# The devbox data directory follows XDG Base Directory spec: ${HOME}/.local/share/devbox
+if [ -d "${HOME}/.local/share/devbox" ]; then
+    sudo chown -R "${USER}:${USER}" "${HOME}/.local/share/devbox"
 fi
 EOF
   chmod +x "$devcontainer_postCreateCommand"
