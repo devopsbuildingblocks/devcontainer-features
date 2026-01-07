@@ -1,7 +1,7 @@
 {
     "name": "Devbox",
     "id": "devbox",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Install devbox, a command-line tool that lets you easily create isolated shells for development using Nix",
     "documentationURL": "https://www.jetify.com/docs/devbox",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
@@ -20,7 +20,7 @@
         }
     },
     "dependsOn": {
-        "./src/common-utils": {},
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/common-utils:0": {},
         "ghcr.io/devcontainers/features/nix:1": {}
     },
     "customizations": {

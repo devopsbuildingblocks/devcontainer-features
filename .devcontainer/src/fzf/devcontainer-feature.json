@@ -1,7 +1,7 @@
 {
     "name": "fzf",
     "id": "fzf",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Installs fzf, a general-purpose command-line fuzzy finder, via devbox global",
     "documentationURL": "https://github.com/junegunn/fzf",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
@@ -51,6 +51,6 @@
         }
     },
     "dependsOn": {
-        "./src/devbox": {}
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox:0": {}
     }
 }
