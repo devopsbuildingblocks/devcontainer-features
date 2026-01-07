@@ -13,12 +13,6 @@ Create a default, non-root user, configure the shell, and volume mount important
 
 
 
-## Customizations
-
-### VS Code Extensions
-
-- `esbenp.prettier-vscode`
-
 This is a critical, foundational feature that sets up the user, shell, and configuration persistence for the entire dev container. It builds upon the official `ghcr.io/devcontainers/features/common-utils` feature.
 
 ### User and Shell Setup

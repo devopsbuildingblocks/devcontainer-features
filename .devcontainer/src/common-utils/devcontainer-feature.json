@@ -1,7 +1,7 @@
 {
     "name": "Common Utilities",
     "id": "common-utils",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Create a default, non-root user, configure the shell, and volume mount important directories",
     "documentationURL": "https://github.com/devopsbuildingblocks/devcontainer-features/tree/main/src/common-utils",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
@@ -13,7 +13,8 @@
             "installOhMyZshConfig": "false",
             "username": "vscode",
             "userUid": "1000",
-            "userGid": "1000"
+            "userGid": "1000",
+            "upgradePackages": "true"
         }
     },
     "customizations": {
@@ -27,10 +28,8 @@
               "bash": {
                   "path": "/usr/bin/bash"
               }
-          },
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
-        "extensions": ["esbenp.prettier-vscode"]
+          }
+        }
       }
     },
     "mounts": [
