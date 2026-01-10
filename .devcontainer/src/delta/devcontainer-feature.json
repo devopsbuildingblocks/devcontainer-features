@@ -1,7 +1,7 @@
 {
     "name": "Delta",
     "id": "delta",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "description": "Installs delta, a syntax-highlighting pager for git, diff, and grep output, via devbox global",
     "documentationURL": "https://github.com/dandavison/delta",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",

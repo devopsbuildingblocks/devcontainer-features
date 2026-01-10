@@ -1,7 +1,7 @@
 {
     "name": "Lazygit",
     "id": "lazygit",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "description": "Installs lazygit, a simple terminal UI for git commands, via devbox global",
     "documentationURL": "https://github.com/jesseduffield/lazygit",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",

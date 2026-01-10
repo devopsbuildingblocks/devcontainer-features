@@ -1,7 +1,7 @@
 {
     "name": "Eza",
     "id": "eza",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "description": "Installs eza, a modern replacement for ls with Git integration and colorful output, via devbox global",
     "documentationURL": "https://github.com/eza-community/eza",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",

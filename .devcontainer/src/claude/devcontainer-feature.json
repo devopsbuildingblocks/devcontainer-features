@@ -1,7 +1,7 @@
 {
     "name": "Claude Code",
     "id": "claude",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "description": "Installs claude-code and vscode extension",
     "documentationURL": "https://docs.anthropic.com/en/docs/claude-code",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",

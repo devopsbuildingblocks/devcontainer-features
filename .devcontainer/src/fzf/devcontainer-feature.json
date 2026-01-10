@@ -1,7 +1,7 @@
 {
     "name": "fzf",
     "id": "fzf",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "description": "Installs fzf, a general-purpose command-line fuzzy finder, via devbox global",
     "documentationURL": "https://github.com/junegunn/fzf",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
