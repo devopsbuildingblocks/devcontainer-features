@@ -134,8 +134,9 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 # Initialize devbox global environment
 if command -v devbox >/dev/null 2>&1; then
     # Load devbox global packages into the environment
-    eval "$(devbox global shellenv -q)"
-    eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
+    # --init-hook runs initialization hooks for a proper setup
+    # This also creates the 'refresh-global' alias to update the PATH after adding packages
+    eval "$(devbox global shellenv --init-hook)"
 fi
 EOF
 )

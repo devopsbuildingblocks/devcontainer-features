@@ -173,7 +173,8 @@ devbox_global_add() {
 
     # Refresh environment
     log_info "Refreshing devbox environment"
-    eval "$(devbox global shellenv -r)"
+    # This is aliased to 'refresh-global'
+    eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 
     log_success "Installed $package"
 }
