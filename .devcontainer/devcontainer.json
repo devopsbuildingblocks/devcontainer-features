@@ -22,8 +22,16 @@
     },
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-        "./src/oh-my-posh": {},
-        "./src/eza": {},
+        "ghcr.io/devcontainers/features/nix:1": {},
+        "./src/lib": {},
+        "./src/common-utils": {},
+        "./src/devbox": {},
+        "./src/oh-my-posh": {
+          "theme": "db2"
+        },
+        "./src/eza": {
+          "enableIcons": true
+        },
         "./src/bat": {},
         "./src/fzf": {},
         "./src/delta": {},
