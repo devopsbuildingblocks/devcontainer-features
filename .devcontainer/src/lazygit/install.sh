@@ -61,28 +61,46 @@ setup_themes() {
 }
 
 #######################################
-# Setup lazygit configuration file
+# Setup lazygit configuration file for a specific user
+# Arguments:
+#   $1 - User name
+#   $2 - User home directory
 #######################################
-setup_config() {
-    local user_home
-    user_home=$(get_remote_user_home)
+setup_config_for_user() {
+    local user="$1"
+    local user_home="$2"
     local config_dir="${user_home}/.config/lazygit"
 
-    log_info "Setting up lazygit configuration"
-    ensure_directory "$config_dir"
+    log_info "Setting up lazygit configuration for user: $user"
+    mkdir -p "$config_dir"
 
     local config_file="${config_dir}/config.yml"
 
     # Generate config based on theme and options
     generate_config > "$config_file"
 
-    local user
-    user=$(get_remote_user)
     if [ "$user" != "root" ]; then
-        chown -R "$user:$user" "$config_dir"
+        chown -R "$user:$user" "${user_home}/.config"
     fi
 
-    log_success "Created lazygit config at $config_file"
+    log_success "Created lazygit config at $config_file for $user"
+}
+
+#######################################
+# Setup lazygit configuration file for all users
+#######################################
+setup_config() {
+    # Always set up for root
+    setup_config_for_user "root" "/root"
+
+    # Set up for remote user if different from root
+    local remote_user
+    remote_user=$(get_remote_user)
+    if [ "$remote_user" != "root" ]; then
+        local remote_user_home
+        remote_user_home=$(get_remote_user_home)
+        setup_config_for_user "$remote_user" "$remote_user_home"
+    fi
 }
 
 #######################################

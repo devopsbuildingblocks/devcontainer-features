@@ -62,18 +62,24 @@ setup_themes() {
 }
 
 #######################################
-# Setup eza configuration directory
+# Setup eza configuration directory for a specific user
 # Creates ~/.config/eza with symlink to active theme
+# Arguments:
+#   $1 - User name
+#   $2 - User home directory
 #######################################
-setup_config() {
-    local user_home
-    user_home=$(get_remote_user_home)
+setup_config_for_user() {
+    local user="$1"
+    local user_home="$2"
     local config_dir="${user_home}/.config/eza"
     local themes_dir="/usr/local/share/devcontainer-features/eza/themes"
 
-    log_info "Setting up eza configuration"
+    log_info "Setting up eza configuration for user: $user"
 
-    ensure_directory "$config_dir"
+    mkdir -p "$config_dir"
+    if [ "$user" != "root" ]; then
+        chown -R "$user:$user" "${user_home}/.config"
+    fi
 
     # Link the selected theme if not "none"
     if [ "$THEME" != "none" ]; then
@@ -82,10 +88,30 @@ setup_config() {
 
         if [ -f "$theme_file" ]; then
             ln -sf "$theme_file" "$target_file"
-            log_success "Linked theme '$THEME' to $target_file"
+            log_success "Linked theme '$THEME' to $target_file for $user"
         else
             log_warning "Theme file not found: $theme_file"
         fi
+    fi
+}
+
+#######################################
+# Setup eza configuration directory for all users
+# Creates ~/.config/eza with symlink to active theme
+#######################################
+setup_config() {
+    local themes_dir="/usr/local/share/devcontainer-features/eza/themes"
+
+    # Always set up for root
+    setup_config_for_user "root" "/root"
+
+    # Set up for remote user if different from root
+    local remote_user
+    remote_user=$(get_remote_user)
+    if [ "$remote_user" != "root" ]; then
+        local remote_user_home
+        remote_user_home=$(get_remote_user_home)
+        setup_config_for_user "$remote_user" "$remote_user_home"
     fi
 }
 
@@ -98,14 +124,9 @@ generate_shell_integration() {
 # This file is sourced by ~/.shellrc.d/main.sh
 # eza is installed via devbox global, which is loaded by devbox-feature.sh
 
-EOF
-
-    # Set EZA_CONFIG_DIR for theme support
-    local user_home
-    user_home=$(get_remote_user_home)
-    cat <<EOF
 # eza configuration directory (for theme support)
-export EZA_CONFIG_DIR="${user_home}/.config/eza"
+# Uses $HOME to work correctly for both root and non-root users
+export EZA_CONFIG_DIR="${HOME}/.config/eza"
 
 EOF
 

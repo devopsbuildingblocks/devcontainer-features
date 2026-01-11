@@ -13,13 +13,21 @@ else
   _REMOTE_USER_HOME="/root"
 fi
 
-shellrc_dir="${_REMOTE_USER_HOME}/.shellrc.d"
 shells=("zsh" "bash")
 
 #######################################
-# Setup shellrc.d directory and main loader
+# Setup shellrc.d directory and main loader for a specific user
+# Arguments:
+#   $1 - User name
+#   $2 - User home directory
 #######################################
-setup_config() {
+setup_user_shell_config() {
+  local user="$1"
+  local user_home="$2"
+  local shellrc_dir="${user_home}/.shellrc.d"
+
+  log_info "Setting up shell configuration for user: $user (home: $user_home)"
+
   # Create shellrc.d directory
   mkdir -p "$shellrc_dir"
 
@@ -95,15 +103,46 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 EOF
-  chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "$shellrc_dir"
+
+  # Set ownership for non-root users
+  if [ "$user" != "root" ]; then
+    chown -R "${user}:${user}" "$shellrc_dir"
+  fi
 
   # Source main.sh from shell RC files
   for shell in "${shells[@]}"; do
-    echo "source \"${shellrc_dir}/main.sh\"" >> "${_REMOTE_USER_HOME}/.${shell}rc"
-    chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${_REMOTE_USER_HOME}/.${shell}rc"
+    local rc_file="${user_home}/.${shell}rc"
+    # Only add the source line if it doesn't already exist
+    if [ -f "$rc_file" ]; then
+      if ! grep -q "source \"${shellrc_dir}/main.sh\"" "$rc_file" 2>/dev/null; then
+        echo "source \"${shellrc_dir}/main.sh\"" >> "$rc_file"
+      fi
+    else
+      echo "source \"${shellrc_dir}/main.sh\"" > "$rc_file"
+    fi
+    if [ "$user" != "root" ]; then
+      chown "${user}:${user}" "$rc_file"
+    fi
   done
 
-  log_success "Created shellrc.d infrastructure"
+  log_success "Created shellrc.d infrastructure for $user"
+}
+
+#######################################
+# Setup shellrc.d for all users (root and remote user)
+#######################################
+setup_config() {
+  # Always set up root user
+  setup_user_shell_config "root" "/root"
+
+  # Set root's default shell to zsh
+  chsh -s /usr/bin/zsh root
+  log_info "Set root's default shell to zsh"
+
+  # Set up remote user if different from root
+  if [ "$_REMOTE_USER" != "root" ]; then
+    setup_user_shell_config "$_REMOTE_USER" "$_REMOTE_USER_HOME"
+  fi
 }
 
 setup_volume_mounts() {

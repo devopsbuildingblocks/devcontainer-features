@@ -78,22 +78,33 @@ get_remote_user_home() {
 }
 
 #######################################
-# Ensure the shellrc.d directory exists
-# Creates ~/.shellrc.d if it doesn't exist
+# Ensure the shellrc.d directory exists for a specific user
+# Creates the directory if it doesn't exist
+# Arguments:
+#   $1 - User name (optional, defaults to remote user)
+#   $2 - User home directory (optional, auto-detected from user)
 # Outputs:
 #   The shellrc.d directory path
 #######################################
-ensure_shellrc_dir() {
-    local user_home
-    user_home=$(get_remote_user_home)
+ensure_shellrc_dir_for_user() {
+    local user="${1:-$(get_remote_user)}"
+    local user_home="$2"
+
+    # Auto-detect home directory if not provided
+    if [ -z "$user_home" ]; then
+        if [ "$user" = "root" ]; then
+            user_home="/root"
+        else
+            user_home="/home/$user"
+        fi
+    fi
+
     local shellrc_dir="${user_home}/.shellrc.d"
 
     if [ ! -d "$shellrc_dir" ]; then
         log_info "Creating shellrc.d directory: $shellrc_dir"
         mkdir -p "$shellrc_dir"
 
-        local user
-        user=$(get_remote_user)
         if [ "$user" != "root" ]; then
             chown -R "$user:$user" "$shellrc_dir"
         fi
@@ -103,7 +114,52 @@ ensure_shellrc_dir() {
 }
 
 #######################################
-# Write a feature configuration script to ~/.shellrc.d
+# Ensure the shellrc.d directory exists
+# Creates ~/.shellrc.d if it doesn't exist
+# Outputs:
+#   The shellrc.d directory path
+#######################################
+ensure_shellrc_dir() {
+    ensure_shellrc_dir_for_user "$(get_remote_user)" "$(get_remote_user_home)"
+}
+
+#######################################
+# Write a feature configuration script to a specific user's ~/.shellrc.d
+# Arguments:
+#   $1 - Feature name (e.g., "lazygit")
+#   $2 - Content to write
+#   $3 - User name
+#   $4 - User home directory (optional, auto-detected from user)
+#######################################
+write_shellrc_feature_for_user() {
+    local feature_name="$1"
+    local content="$2"
+    local user="$3"
+    local user_home="$4"
+
+    if [ -z "$feature_name" ] || [ -z "$content" ] || [ -z "$user" ]; then
+        log_error "write_shellrc_feature_for_user requires feature_name, content, and user arguments"
+        return 1
+    fi
+
+    local shellrc_dir
+    shellrc_dir=$(ensure_shellrc_dir_for_user "$user" "$user_home")
+    local feature_file="${shellrc_dir}/${feature_name}-feature.sh"
+
+    log_info "Writing shell configuration for $feature_name (user: $user)"
+    echo "$content" > "$feature_file"
+    chmod +x "$feature_file"
+
+    if [ "$user" != "root" ]; then
+        chown "$user:$user" "$feature_file"
+    fi
+
+    log_success "Created $feature_file"
+}
+
+#######################################
+# Write a feature configuration script to ~/.shellrc.d for all users
+# Writes to both root and the remote user (if different)
 # Arguments:
 #   Feature name (e.g., "lazygit")
 #   Content to write
@@ -117,21 +173,17 @@ write_shellrc_feature() {
         return 1
     fi
 
-    local shellrc_dir
-    shellrc_dir=$(ensure_shellrc_dir)
-    local feature_file="${shellrc_dir}/${feature_name}-feature.sh"
+    # Always write to root
+    write_shellrc_feature_for_user "$feature_name" "$content" "root" "/root"
 
-    log_info "Writing shell configuration for $feature_name"
-    echo "$content" > "$feature_file"
-    chmod +x "$feature_file"
-
-    local user
-    user=$(get_remote_user)
-    if [ "$user" != "root" ]; then
-        chown "$user:$user" "$feature_file"
+    # Write to remote user if different from root
+    local remote_user
+    remote_user=$(get_remote_user)
+    if [ "$remote_user" != "root" ]; then
+        local remote_user_home
+        remote_user_home=$(get_remote_user_home)
+        write_shellrc_feature_for_user "$feature_name" "$content" "$remote_user" "$remote_user_home"
     fi
-
-    log_success "Created $feature_file"
 }
 
 #######################################
@@ -153,21 +205,24 @@ devbox_global_add() {
         return 1
     fi
 
-    # Set up environment for devbox
-    local user_home
-    user_home=$(get_remote_user_home)
-    local user
-    user=$(get_remote_user)
-
-    export XDG_DATA_HOME="${user_home}/.local/share"
-    export USER="$user"
-    export HOME="$user_home"
-
-    log_info "Installing $package via devbox global add"
+    log_info "Installing $package via devbox global add for root user"
     devbox global add "$package"
 
     # Ensure proper ownership of devbox directories
     if [ "$user" != "root" ]; then
+        # Set up environment for devbox
+        local user_home
+        user_home=$(get_remote_user_home)
+        local user
+        user=$(get_remote_user)
+
+        export XDG_DATA_HOME="${user_home}/.local/share"
+        export USER="$user"
+        export HOME="$user_home"
+
+        log_info "Installing $package via devbox global add for remote user"
+        devbox global add "$package"
+
         chown -R "$user:$user" "${user_home}/.local/share/devbox" 2>/dev/null || true
     fi
 

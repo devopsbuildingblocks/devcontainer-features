@@ -40,31 +40,49 @@ install_oh_my_posh() {
 }
 
 #######################################
-# Setup oh-my-posh themes directory
+# Setup oh-my-posh themes directory for a specific user
+# Arguments:
+#   $1 - User name
+#   $2 - User home directory
 #######################################
-setup_themes() {
-    log_info "Setting up oh-my-posh themes"
-
-    local user_home
-    user_home=$(get_remote_user_home)
+setup_themes_for_user() {
+    local user="$1"
+    local user_home="$2"
     local themes_dir="${user_home}/.local/share/oh-my-posh/themes"
 
+    log_info "Setting up oh-my-posh themes for user: $user"
+
     # Create themes directory
-    ensure_directory "${user_home}/.local/share/oh-my-posh"
+    mkdir -p "${user_home}/.local/share/oh-my-posh"
 
     # Copy bundled themes to user directory
     if [ -d "themes" ]; then
         cp -r themes "$themes_dir"
 
-        local user
-        user=$(get_remote_user)
         if [ "$user" != "root" ]; then
             chown -R "$user:$user" "${user_home}/.local/share/oh-my-posh"
         fi
 
-        log_success "Themes installed to $themes_dir"
+        log_success "Themes installed to $themes_dir for $user"
     else
         log_warning "No bundled themes directory found, will use oh-my-posh built-in themes"
+    fi
+}
+
+#######################################
+# Setup oh-my-posh themes directory for all users
+#######################################
+setup_themes() {
+    # Always set up for root
+    setup_themes_for_user "root" "/root"
+
+    # Set up for remote user if different from root
+    local remote_user
+    remote_user=$(get_remote_user)
+    if [ "$remote_user" != "root" ]; then
+        local remote_user_home
+        remote_user_home=$(get_remote_user_home)
+        setup_themes_for_user "$remote_user" "$remote_user_home"
     fi
 }
 
@@ -82,18 +100,18 @@ main() {
 }
 
 #######################################
-# Get theme path for selected theme
+# Get theme path for selected theme (for shell integration)
+# Returns a path using $HOME variable so it works for any user at runtime
 # Returns:
-#   Full path to the theme file (local) or URL (built-in)
+#   Path expression to the theme file (local) or URL (built-in)
 #######################################
 get_theme_path() {
-    local user_home
-    user_home=$(get_remote_user_home)
-    local local_theme_path="${user_home}/.local/share/oh-my-posh/themes/${THEME}.omp.json"
+    # Check if theme exists locally (custom theme) - use any user's home to check
+    local check_path="/root/.local/share/oh-my-posh/themes/${THEME}.omp.json"
 
-    # Check if theme exists locally (custom theme)
-    if [ -f "$local_theme_path" ]; then
-        echo "$local_theme_path"
+    if [ -f "$check_path" ]; then
+        # Return path using $HOME so it works for any user at runtime
+        echo "\${HOME}/.local/share/oh-my-posh/themes/${THEME}.omp.json"
     else
         # Use built-in theme from oh-my-posh GitHub repository
         local omp_version

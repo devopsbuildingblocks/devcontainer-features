@@ -116,11 +116,19 @@ EOF
 setup_shell_integration() {
   log_info "Setting up shell integration"
 
-  local user_home
-  user_home=$(get_remote_user_home)
+  # Ensure XDG_DATA_HOME directory exists for both users
+  # Root user
+  mkdir -p "/root/.local/share"
 
-  # Ensure XDG_DATA_HOME directory exists
-  ensure_directory "${user_home}/.local/share"
+  # Remote user (if different from root)
+  local remote_user
+  remote_user=$(get_remote_user)
+  if [ "$remote_user" != "root" ]; then
+    local remote_user_home
+    remote_user_home=$(get_remote_user_home)
+    mkdir -p "${remote_user_home}/.local/share"
+    chown -R "$remote_user:$remote_user" "${remote_user_home}/.local"
+  fi
 
   # Create shell configuration
   local shellrc_content
@@ -134,6 +142,8 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 # Initialize devbox global environment
 if command -v devbox >/dev/null 2>&1; then
     # Load devbox global packages into the environment
+    # This is aliased to 'refresh-global'
+    eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
     # --init-hook runs initialization hooks for a proper setup
     # This also creates the 'refresh-global' alias to update the PATH after adding packages
     eval "$(devbox global shellenv --init-hook)"
