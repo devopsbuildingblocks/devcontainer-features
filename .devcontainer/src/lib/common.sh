@@ -205,31 +205,52 @@ devbox_global_add() {
         return 1
     fi
 
+    # Save original environment
+    local orig_home="${HOME}"
+    local orig_user="${USER}"
+    local orig_xdg="${XDG_DATA_HOME:-}"
+
     log_info "Installing $package via devbox global add for root user"
     devbox global add "$package"
 
-    # Ensure proper ownership of devbox directories
+    # Refresh root's environment
+    log_info "Refreshing devbox environment for root"
+    eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
+
+    # Get remote user info
+    local user
+    user=$(get_remote_user)
+
+    # Install and configure for remote user if different from root
     if [ "$user" != "root" ]; then
-        # Set up environment for devbox
         local user_home
         user_home=$(get_remote_user_home)
-        local user
-        user=$(get_remote_user)
 
+        # Set up environment for remote user's devbox
         export XDG_DATA_HOME="${user_home}/.local/share"
         export USER="$user"
         export HOME="$user_home"
 
+        # Ensure parent directories exist with correct ownership
+        mkdir -p "${user_home}/.local/share"
+        chown -R "$user:$user" "${user_home}/.local"
+
         log_info "Installing $package via devbox global add for remote user"
         devbox global add "$package"
 
+        # Fix ownership of all devbox-related directories
         chown -R "$user:$user" "${user_home}/.local/share/devbox" 2>/dev/null || true
-    fi
+        chown -R "$user:$user" "${user_home}/.cache/devbox" 2>/dev/null || true
 
-    # Refresh environment
-    log_info "Refreshing devbox environment"
-    # This is aliased to 'refresh-global'
-    eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
+        # Restore original environment
+        export HOME="${orig_home}"
+        export USER="${orig_user}"
+        if [ -n "${orig_xdg}" ]; then
+            export XDG_DATA_HOME="${orig_xdg}"
+        else
+            unset XDG_DATA_HOME
+        fi
+    fi
 
     log_success "Installed $package"
 }
@@ -361,6 +382,7 @@ SCRIPT_FILE
   # Merge existing content into volume mount
   if [ -d ~/${path} ] && [ ! -L ~/${path} ]; then
       sudo cp -r ~/${path}/* /mnt/devcontainer-features/${feature_name}/${path}/ 2>/dev/null || true
+      sudo chown -R \${USER}:\${USER} /mnt/devcontainer-features/${feature_name}/${path}
       sudo rm -rf ~/${path}
   fi
   ln -sf /mnt/devcontainer-features/${feature_name}/${path} ~/${path}
