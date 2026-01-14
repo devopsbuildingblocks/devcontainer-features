@@ -4,10 +4,9 @@ tasks:
   test:
     dir: "{{.ROOT_DIR}}/.devcontainer"
     vars:
-      FEATURES: |
-        {{ if .CLI_ARGS }}--features {{.CLI_ARGS}}{{ end }}
+      FEATURES: '{{ if .CLI_ARGS }}--features {{.CLI_ARGS}}{{ end }}'
     cmds:
-      - devcontainer features test {{.FEATURES}} -i mcr.microsoft.com/devcontainers/base:debian
+      - devcontainer features test {{.FEATURES}} -i ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5
   docs:
     dir: "{{.ROOT_DIR}}/.devcontainer/src"
     cmds:
