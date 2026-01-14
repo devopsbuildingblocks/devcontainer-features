@@ -5,6 +5,11 @@ set -e
 # Import test library bundled with the devcontainer CLI
 source dev-container-features-test-lib
 
+# Source devbox shell integration to get devbox global packages in PATH
+if [ -f "$HOME/.shellrc.d/devbox-feature.sh" ]; then
+    source "$HOME/.shellrc.d/devbox-feature.sh"
+fi
+
 # Test that oh-my-posh was installed
 check "oh-my-posh command is available" oh-my-posh version
 
@@ -14,8 +19,8 @@ check "oh-my-posh-feature.sh exists in shellrc.d" test -f "$HOME/.shellrc.d/oh-m
 # Test that agnoster theme is configured
 check "agnoster theme is configured" grep -q "agnoster" "$HOME/.shellrc.d/oh-my-posh-feature.sh"
 
-# Test CURRENT_OMP_THEME is set to agnoster
-check "CURRENT_OMP_THEME is set to agnoster" grep -q 'CURRENT_OMP_THEME="agnoster"' "$HOME/.shellrc.d/oh-my-posh-feature.sh"
+# Test CURRENT_OHMYPOSH_THEME is set to agnoster
+check "CURRENT_OHMYPOSH_THEME is set to agnoster" grep -q 'CURRENT_OHMYPOSH_THEME="agnoster"' "$HOME/.shellrc.d/oh-my-posh-feature.sh"
 
 # Report results
 reportResults

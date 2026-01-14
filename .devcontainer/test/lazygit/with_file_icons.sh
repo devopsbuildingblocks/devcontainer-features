@@ -10,14 +10,14 @@ if [ -f "$HOME/.shellrc.d/devbox-feature.sh" ]; then
     source "$HOME/.shellrc.d/devbox-feature.sh"
 fi
 
-# Test that delta was installed
-check "delta command is available" delta --version
+# Test that lazygit was installed
+check "lazygit command is available" lazygit --version
 
 # Test that shell integration file exists
-check "delta-feature.sh exists in shellrc.d" test -f "$HOME/.shellrc.d/delta-feature.sh"
+check "lazygit-feature.sh exists in shellrc.d" test -f "$HOME/.shellrc.d/lazygit-feature.sh"
 
-# Test that postCreateCommand script has side-by-side config
-check "side-by-side mode is configured" grep -q "side-by-side" /usr/local/bin/delta-postCreateCommand.sh
+# Test that config.yml contains showFileIcons enabled
+check "config.yml contains showFileIcons: true" grep -q "showFileIcons: true" "$HOME/.config/lazygit/config.yml"
 
 # Report results
 reportResults

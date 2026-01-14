@@ -1,0 +1,76 @@
+name: "Test Dev Container Features"
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.changed.outputs.matrix }}
+      has_changes: ${{ steps.changed.outputs.has_changes }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: "Get changed features"
+        id: changed
+        run: |
+          BASE_REF="${{ github.base_ref }}"
+          BASE_REF="${BASE_REF:-main}"
+          changed_features=$(git diff --name-only origin/$BASE_REF...HEAD -- .devcontainer/src/ .devcontainer/test/ | \
+            grep -oP '\.devcontainer/(src|test)/\K[^/]+' | \
+            sort -u)
+
+          if [ -z "$changed_features" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "matrix={\"include\":[]}" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+
+          # Build matrix JSON
+          matrix_json='{"include":['
+          first=true
+          for feature in $changed_features; do
+            case "$feature" in
+              lib|common-utils)
+                base_image="buildpack-deps:noble-curl"
+                ;;
+              devbox)
+                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-base:latest"
+                ;;
+              *)
+                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest"
+                ;;
+            esac
+            if [ "$first" = true ]; then
+              first=false
+            else
+              matrix_json="${matrix_json},"
+            fi
+            matrix_json="${matrix_json}{\"feature\":\"$feature\",\"base_image\":\"$base_image\"}"
+          done
+          matrix_json="${matrix_json}]}"
+
+          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
+          echo "Matrix: $matrix_json"
+
+  test:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install devcontainer CLI"
+        run: npm install -g @devcontainers/cli
+      - name: "Test ${{ matrix.feature }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Testing ${{ matrix.feature }} with base image: ${{ matrix.base_image }}"
+          devcontainer features test --project-folder ./.devcontainer --features "${{ matrix.feature }}" --base-image "${{ matrix.base_image }}"
