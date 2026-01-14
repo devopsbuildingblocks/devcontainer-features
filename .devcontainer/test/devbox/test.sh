@@ -20,8 +20,8 @@ check "devbox-feature.sh exists" test -f "$HOME/.shellrc.d/devbox-feature.sh"
 # Test 5: XDG_DATA_HOME directory exists
 check ".local/share directory exists" test -d "$HOME/.local/share"
 
-# Test 6: devbox global list command works
-check "devbox global list command works" devbox global list
+# Test 6: devbox global list command works (source shell integration first)
+check "devbox global list command works" bash -c 'source "$HOME/.shellrc.d/devbox-feature.sh" && devbox global list'
 
 # Report results
 reportResults
