@@ -69,6 +69,8 @@ jobs:
       - name: "Install devcontainer CLI"
         run: npm install -g @devcontainers/cli
       - name: "Test ${{ matrix.feature }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Testing ${{ matrix.feature }} with base image: ${{ matrix.base_image }}"
           devcontainer features test --project-folder ./.devcontainer --features "${{ matrix.feature }}" --base-image "${{ matrix.base_image }}"
