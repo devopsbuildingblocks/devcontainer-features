@@ -20,6 +20,13 @@ Installs delta, a syntax-highlighting pager for git, diff, and grep output, via 
 | theme | Color theme for delta syntax highlighting (auto detects light/dark mode) | string | TwoDark |
 | features | Delta feature set: default (basic), side-by-side (two-column diff), line-numbers, or decorations (commit info) | string | default |
 
+### Dependencies
+
+> **Required:** This feature requires the `devbox` feature (and its dependencies) to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox` (includes `lib`, `common-utils`, `nix`, and `devbox`)
+
 This feature installs `delta`, a powerful syntax-highlighting pager for `git`, `diff`, and `grep` output.
 
 ### Installation & Configuration

@@ -1,7 +1,7 @@
 {
     "name": "Gemini CLI",
     "id": "gemini",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Installs gemini-cli and vscode extension",
     "documentationURL": "https://geminicli.com/docs/",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
@@ -13,9 +13,9 @@
             "description": "Version of gemini-cli to install"
         }
     },
-    "dependsOn": {
-        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox:0": {}
-    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [

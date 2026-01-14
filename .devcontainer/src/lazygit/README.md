@@ -19,6 +19,13 @@ Installs lazygit, a simple terminal UI for git commands, via devbox global
 | theme | Color theme for lazygit UI (includes branchColors and theme configuration) | string | db2-dark |
 | enableGitDiffPager | Enable pager for git diff viewing in lazygit | boolean | false |
 
+### Dependencies
+
+> **Required:** This feature requires the `devbox` feature (and its dependencies) to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox` (includes `lib`, `common-utils`, `nix`, and `devbox`)
+
 This feature installs `lazygit`, a popular terminal-based UI for Git, and provides significant shell integration for a rich user experience.
 
 ### Installation & Configuration

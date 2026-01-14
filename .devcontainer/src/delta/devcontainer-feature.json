@@ -1,7 +1,7 @@
 {
     "name": "Delta",
     "id": "delta",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Installs delta, a syntax-highlighting pager for git, diff, and grep output, via devbox global",
     "documentationURL": "https://github.com/dandavison/delta",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
@@ -47,7 +47,7 @@
             "description": "Delta feature set: default (basic), side-by-side (two-column diff), line-numbers, or decorations (commit info)"
         }
     },
-    "dependsOn": {
-        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox:0": {}
-    }
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
 }

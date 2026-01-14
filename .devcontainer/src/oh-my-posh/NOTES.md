@@ -1,3 +1,10 @@
+### Dependencies
+
+> **Required:** This feature requires the `devbox` feature (and its dependencies) to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox` (includes `lib`, `common-utils`, `nix`, and `devbox`)
+
 This feature installs `Oh My Posh`, a powerful and highly customizable prompt theme engine for any shell.
 
 ### Installation & Configuration

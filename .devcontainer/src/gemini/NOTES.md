@@ -1,3 +1,10 @@
+### Dependencies
+
+> **Required:** This feature requires the `devbox` feature (and its dependencies) to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox` (includes `lib`, `common-utils`, `nix`, and `devbox`)
+
 This feature installs the `gemini-cli` for interacting with Google's Gemini API and the official Google Gemini VS Code extension.
 
 ### Installation & Configuration

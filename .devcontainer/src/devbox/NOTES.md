@@ -1,3 +1,10 @@
+### Dependencies
+
+> **Required:** This feature requires the `common-utils` feature (and its dependencies) and the `ghcr.io/devcontainers/features/nix` feature to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-base` (includes `lib` and `common-utils`)
+
 This is a foundational feature that installs `devbox`, a command-line tool for creating isolated, reproducible development environments powered by Nix. Many other features in this repository depend on it for package management.
 
 ### Installation & Configuration

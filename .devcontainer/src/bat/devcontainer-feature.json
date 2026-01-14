@@ -1,7 +1,7 @@
 {
     "name": "Bat",
     "id": "bat",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Installs bat, a cat clone with syntax highlighting and Git integration, via devbox global",
     "documentationURL": "https://github.com/sharkdp/bat",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
@@ -39,7 +39,7 @@
             "description": "Color theme for bat syntax highlighting (use bat --list-themes to see all)"
         }
     },
-    "dependsOn": {
-        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox:0": {}
-    }
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
 }

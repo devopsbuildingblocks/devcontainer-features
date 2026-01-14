@@ -1,7 +1,7 @@
 {
     "name": "Lazygit",
     "id": "lazygit",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "Installs lazygit, a simple terminal UI for git commands, via devbox global",
     "documentationURL": "https://github.com/jesseduffield/lazygit",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
@@ -38,7 +38,7 @@
             "description": "Enable pager for git diff viewing in lazygit"
         }
     },
-    "dependsOn": {
-        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox:0": {}
-    }
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
 }

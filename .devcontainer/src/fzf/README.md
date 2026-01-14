@@ -21,6 +21,13 @@ Installs fzf, a general-purpose command-line fuzzy finder, via devbox global
 | theme | Color theme for fzf interface | string | db2-dark |
 | defaultOptions | Default fzf options (FZF_DEFAULT_OPTS) | string | --height 40% --layout=reverse --border |
 
+### Dependencies
+
+> **Required:** This feature requires the `devbox` feature (and its dependencies) to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox` (includes `lib`, `common-utils`, `nix`, and `devbox`)
+
 This feature installs `fzf`, a powerful command-line fuzzy finder, and provides deep shell integration for an enhanced user experience.
 
 ### Installation & Configuration

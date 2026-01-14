@@ -19,6 +19,13 @@ Installs bat, a cat clone with syntax highlighting and Git integration, via devb
 | aliasAsCat | Create an alias for cat to use bat (with plain style and no paging) | boolean | true |
 | theme | Color theme for bat syntax highlighting (use bat --list-themes to see all) | string | TwoDark |
 
+### Dependencies
+
+> **Required:** This feature requires the `devbox` feature (and its dependencies) to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox` (includes `lib`, `common-utils`, `nix`, and `devbox`)
+
 This feature installs `bat`, a modern replacement for `cat` with syntax highlighting and Git integration.
 
 ### Installation & Configuration

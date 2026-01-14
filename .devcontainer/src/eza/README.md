@@ -20,6 +20,13 @@ Installs eza, a modern replacement for ls with Git integration and colorful outp
 | aliasAsLs | Create aliases for ls commands (ls, ll, la, lt, l) to use eza | boolean | true |
 | enableIcons | Enable icons in output (requires Nerd Fonts in terminal) | boolean | false |
 
+### Dependencies
+
+> **Required:** This feature requires the `devbox` feature (and its dependencies) to be installed first.
+>
+> To simplify setup, use a prebuilt base image that includes all dependencies:
+> - `ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox` (includes `lib`, `common-utils`, `nix`, and `devbox`)
+
 This feature installs `eza`, a modern and feature-rich replacement for the standard `ls` command.
 
 ### Installation & Configuration
