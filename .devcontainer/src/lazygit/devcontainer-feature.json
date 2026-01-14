@@ -36,6 +36,11 @@
             "type": "boolean",
             "default": false,
             "description": "Enable pager for git diff viewing in lazygit"
+        },
+        "enableFileIcons": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show file icons in lazygit (requires a Nerd Font)"
         }
     },
     "installsAfter": [

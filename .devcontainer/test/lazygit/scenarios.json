@@ -14,5 +14,13 @@
                 "enableGitDiffPager": true
             }
         }
+    },
+    "with_file_icons": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "features": {
+            "lazygit": {
+                "enableFileIcons": true
+            }
+        }
     }
 }

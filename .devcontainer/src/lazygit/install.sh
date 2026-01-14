@@ -15,6 +15,7 @@ source /usr/local/lib/devcontainer-features/common.sh
 VERSION="${VERSION:-latest}"
 THEME="${THEME:-default}"
 ENABLEGITDIFFPAGER="${ENABLEGITDIFFPAGER:-false}"
+ENABLEFILEICONS="${ENABLEFILEICONS:-false}"
 
 #######################################
 # Install lazygit via devbox global
@@ -137,6 +138,7 @@ gui:
   expandFocusedSidePanel: true
   statusPanelView: allBranchesLog
   nerdFontsVersion: "3"
+  showFileIcons: $ENABLEFILEICONS
 $(get_theme_config)
 $(get_git_config)
 EOF
@@ -302,6 +304,12 @@ lzg-theme() {
         has_git_paging="true"
     fi
 
+    # Preserve showFileIcons setting from current config
+    local show_file_icons="false"
+    if grep -q "showFileIcons: true" "$config_file" 2>/dev/null; then
+        show_file_icons="true"
+    fi
+
     # Backup original config (in case something goes wrong)
     cp "$config_file" "${config_file}.backup"
 
@@ -323,6 +331,7 @@ gui:
   expandFocusedSidePanel: true
   statusPanelView: allBranchesLog
   nerdFontsVersion: "3"
+  showFileIcons: $show_file_icons
 LZG_CONFIG_EOF
 
     # Load and indent theme content (add 2 spaces to each line for proper YAML nesting)
