@@ -18,8 +18,8 @@ jobs:
           changed_features=$(git diff --name-only origin/$BASE_REF...HEAD -- .devcontainer/src/ .devcontainer/test/ | \
             grep -oP '\.devcontainer/(src|test)/\K[^/]+' | \
             sort -u | \
-            tr '\n' ',' | \
-            sed 's/,$//')
+            tr '\n' ' ' | \
+            xargs)
           echo "features=$changed_features" >> $GITHUB_OUTPUT
           echo "Changed features: $changed_features"
       - name: "Install devcontainer CLI"
