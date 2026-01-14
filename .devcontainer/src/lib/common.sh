@@ -238,6 +238,10 @@ devbox_global_add() {
         log_info "Installing $package via devbox global add for remote user"
         devbox global add "$package"
 
+        # Refresh remoteUser's environment
+        log_info "Refreshing devbox environment for $user"
+        eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
+
         # Fix ownership of all devbox-related directories
         chown -R "$user:$user" "${user_home}/.local/share/devbox" 2>/dev/null || true
         chown -R "$user:$user" "${user_home}/.cache/devbox" 2>/dev/null || true

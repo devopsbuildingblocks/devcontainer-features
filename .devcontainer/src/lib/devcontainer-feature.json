@@ -1,7 +1,7 @@
 {
     "name": "Common Library",
     "id": "lib",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Common utilities library for devcontainer features. Provides shared bash functions for feature installation scripts.",
     "documentationURL": "https://github.com/devopsbuildingblocks/devcontainer-features/tree/main/src/common-utils",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
