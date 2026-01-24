@@ -1,6 +1,6 @@
 {
     "with_git_config": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest",
         "features": {
             "delta": {
                 "configureGit": true,
@@ -9,7 +9,7 @@
         }
     },
     "side_by_side": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest",
         "features": {
             "delta": {
                 "features": "side-by-side"
