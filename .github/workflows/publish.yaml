@@ -1,4 +1,4 @@
-name: "Publish Dev Container Images"
+name: "Publish Dev Container Features"
 on:
   workflow_dispatch:
   pull_request:
