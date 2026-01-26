@@ -314,8 +314,10 @@ ensure_directory() {
 # directories that may have files created by root processes.
 #######################################
 fix_feature_volume_ownership() {
+    local user
+    user=$(get_remote_user)
     if [ -d /mnt/devcontainer-features ]; then
-        sudo chown -R "${USER}:${USER}" /mnt/devcontainer-features 2>/dev/null || true
+        sudo chown -R "${user}:${user}" /mnt/devcontainer-features 2>/dev/null || true
     fi
 }
 
