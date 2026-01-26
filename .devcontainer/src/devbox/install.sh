@@ -91,13 +91,12 @@ create_postCreateCommand() {
 #!/bin/bash
 set -e
 
-# Fix ownership of cache and local directories (may be volume mounts with root ownership)
-# This must happen BEFORE running devbox commands that use nix
-for mount_dir in /mnt/devcontainer-features/common-utils/.cache /mnt/devcontainer-features/common-utils/.local; do
-    if [ -d "$mount_dir" ]; then
-        sudo chown -R "${USER}:${USER}" "$mount_dir" 2>/dev/null || true
-    fi
-done
+# Source common utilities for shared functions
+source /usr/local/lib/devcontainer-features/common.sh
+
+# Fix ownership of volume mounts BEFORE running devbox/nix commands
+# Volume mounts may be root-owned initially
+fix_feature_volume_ownership
 
 # Ensure devbox global directories exist with correct ownership
 mkdir -p "${HOME}/.local/share/devbox/global/default"
@@ -110,6 +109,10 @@ else
     echo "No devbox.json found, initializing devbox..."
     devbox init
 fi
+
+# Fix ownership AFTER devbox/nix operations complete
+# nix-daemon runs as root and creates files with root ownership
+fix_feature_volume_ownership
 EOF
   chmod +x "$devcontainer_postCreateCommand"
   log_success "Created postCreateCommand script"
