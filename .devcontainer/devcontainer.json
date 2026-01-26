@@ -1,6 +1,6 @@
 {
     "name": "DB2 - Dev Container Features",
-    "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-toolbox-nf:0.1.2",
+    "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-toolbox-nf:0.1.3",
     "customizations": {
         "vscode": {
             "settings": {
@@ -19,6 +19,8 @@
         }
     },
     "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/claude:0": {},
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/gemini:0": {}
     }
 }
