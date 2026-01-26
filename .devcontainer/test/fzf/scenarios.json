@@ -1,6 +1,6 @@
 {
     "no_keybindings": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "fzf": {
                 "enableKeyBindings": false
@@ -8,7 +8,7 @@
         }
     },
     "custom_options": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "fzf": {
                 "defaultOptions": "--height 50% --layout=reverse --border --preview 'cat {}'"
@@ -16,7 +16,7 @@
         }
     },
     "dracula_theme": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "fzf": {
                 "theme": "dracula"
