@@ -31,18 +31,18 @@ jobs:
           echo "has_changes=true" >> $GITHUB_OUTPUT
 
           # Build matrix JSON
+          # Base images match Taskfile.yml logic:
+          # - lib, common-utils: ubuntu-base (has lib/common-utils for testing reinstall)
+          # - all others: ubuntu-devbox (has nix/devbox pre-installed)
           matrix_json='{"include":['
           first=true
           for feature in $changed_features; do
             case "$feature" in
               lib|common-utils)
-                base_image="buildpack-deps:noble-curl"
-                ;;
-              devbox)
-                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-base:latest"
+                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-base:0.1.4"
                 ;;
               *)
-                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest"
+                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6"
                 ;;
             esac
             if [ "$first" = true ]; then

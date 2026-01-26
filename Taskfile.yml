@@ -1,12 +1,31 @@
 version: '3'
 
+vars:
+  # Base images for different feature types
+  IMAGE_MINIMAL: buildpack-deps:noble-curl
+  IMAGE_BASE: ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-base:0.1.4
+  IMAGE_DEVBOX: ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6
+
 tasks:
   test:
     dir: "{{.ROOT_DIR}}/.devcontainer"
     vars:
       FEATURES: '{{ if .CLI_ARGS }}--features {{.CLI_ARGS}}{{ end }}'
+      # Select base image based on feature being tested
+      # - lib, common-utils: base image (has lib/common-utils for testing reinstall)
+      # - all others: devbox image (has nix/devbox pre-installed)
+      BASE_IMAGE:
+        sh: |
+          case "{{.CLI_ARGS}}" in
+            lib|common-utils)
+              echo "{{.IMAGE_BASE}}"
+              ;;
+            *)
+              echo "{{.IMAGE_DEVBOX}}"
+              ;;
+          esac
     cmds:
-      - devcontainer features test {{.FEATURES}} -i ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:latest
+      - devcontainer features test {{.FEATURES}} -i {{.BASE_IMAGE}}
   docs:
     dir: "{{.ROOT_DIR}}/.devcontainer/src"
     cmds:
