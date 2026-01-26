@@ -314,8 +314,8 @@ ensure_directory() {
 # directories that may have files created by root processes.
 #######################################
 fix_feature_volume_ownership() {
-    local user
-    user=$(get_remote_user)
+    # Use _REMOTE_USER if set (install.sh context), otherwise fall back to USER (postCreateCommand context)
+    local user="${_REMOTE_USER:-${USER}}"
     if [ -d /mnt/devcontainer-features ]; then
         sudo chown -R "${user}:${user}" /mnt/devcontainer-features 2>/dev/null || true
     fi
