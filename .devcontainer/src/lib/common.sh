@@ -305,6 +305,21 @@ ensure_directory() {
 }
 
 #######################################
+# Fix ownership of all devcontainer feature volume mounts
+# This should be called after any operation that might create
+# files as root (e.g., nix-daemon operations)
+#
+# The function chowns everything under /mnt/devcontainer-features
+# to the current user, ensuring proper access to volume-mounted
+# directories that may have files created by root processes.
+#######################################
+fix_feature_volume_ownership() {
+    if [ -d /mnt/devcontainer-features ]; then
+        sudo chown -R "${USER}:${USER}" /mnt/devcontainer-features 2>/dev/null || true
+    fi
+}
+
+#######################################
 # Create a postCreateCommand script for volume-backed symlinks
 # Generates a script that creates symlinks from home directory to docker volume mounts
 # This allows persistent storage of configuration and data across container rebuilds

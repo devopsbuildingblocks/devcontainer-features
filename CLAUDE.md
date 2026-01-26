@@ -113,6 +113,7 @@ echo "All <feature> tests passed!"
 
 **Volume Mount Persistence:**
 - `create_volume_symlink_script` - Generate postCreateCommand scripts for volume-backed symlinks
+- `fix_feature_volume_ownership` - Fix ownership of all volume mounts under `/mnt/devcontainer-features/` (call after nix/devbox operations that may create root-owned files)
 
 **Utilities:**
 - `ensure_directory`, `command_exists` - Directory and command helpers
@@ -190,6 +191,15 @@ Features can persist configuration across container rebuilds using volume mounts
 - Example: `create_volume_symlink_script "claude" ".claude" ".claude.json"`
 
 ## Coding Standards
+
+### Versioning
+
+**IMPORTANT:** When making changes to a feature, you MUST update the version in its `devcontainer-feature.json`:
+- Bug fixes: increment patch version (e.g., 0.2.0 → 0.2.1)
+- New features: increment minor version (e.g., 0.2.1 → 0.3.0)
+- Breaking changes: increment major version (e.g., 0.3.0 → 1.0.0)
+
+If changes affect shared code in `lib/common.sh`, also bump the `lib` feature version.
 
 ### Function Naming Convention
 

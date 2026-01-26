@@ -4,9 +4,9 @@
     "shellcheck@latest",
     "yamllint@latest",
     "go-task@latest",
-    "devcontainer@latest",
     "shfmt@latest",
-    "act@latest"
+    "act@latest",
+    "devcontainer@0.81.1"
   ],
   "shell": {
     "init_hook": [

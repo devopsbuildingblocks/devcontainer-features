@@ -1,8 +1,6 @@
 {
     "name": "DB2 - Dev Container Features",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+    "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-toolbox-nf:0.1.3",
     "customizations": {
         "vscode": {
             "settings": {
@@ -22,22 +20,7 @@
     },
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-        "ghcr.io/devcontainers/features/nix:1": {},
-        "./src/lib": {},
-        "./src/common-utils": {},
-        "./src/devbox": {},
-        "./src/oh-my-posh": {
-          "theme": "db2"
-        },
-        "./src/eza": {
-          "enableIcons": true
-        },
-        "./src/bat": {},
-        "./src/fzf": {},
-        "./src/delta": {},
-        "./src/lazygit": { "enableGitDiffPager": true },
-        "./src/claude": {},
-        "./src/gemini": {}
-    },
-    "remoteUser": "vscode"
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/claude:0": {},
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/gemini:0": {}
+    }
 }

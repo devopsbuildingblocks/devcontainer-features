@@ -5,6 +5,11 @@ set -e
 # Import test library bundled with the devcontainer CLI
 source dev-container-features-test-lib
 
+# Source devbox shell integration to get devbox global packages in PATH
+if [ -f "$HOME/.shellrc.d/devbox-feature.sh" ]; then
+    source "$HOME/.shellrc.d/devbox-feature.sh"
+fi
+
 # Test 1: eza command is available
 check "eza command is available" eza --version
 

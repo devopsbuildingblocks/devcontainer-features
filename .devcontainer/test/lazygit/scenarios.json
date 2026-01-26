@@ -1,6 +1,6 @@
 {
     "custom_theme": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "lazygit": {
                 "theme": "dracula"
@@ -8,7 +8,7 @@
         }
     },
     "with_pager": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "lazygit": {
                 "enableGitDiffPager": true
@@ -16,7 +16,7 @@
         }
     },
     "with_file_icons": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "lazygit": {
                 "enableFileIcons": true

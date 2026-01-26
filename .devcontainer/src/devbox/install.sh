@@ -91,6 +91,16 @@ create_postCreateCommand() {
 #!/bin/bash
 set -e
 
+# Source common utilities for shared functions
+source /usr/local/lib/devcontainer-features/common.sh
+
+# Fix ownership of volume mounts BEFORE running devbox/nix commands
+# Volume mounts may be root-owned initially
+fix_feature_volume_ownership
+
+# Ensure devbox global directories exist with correct ownership
+mkdir -p "${HOME}/.local/share/devbox/global/default"
+
 # Run devbox commands
 if [ -f "devbox.json" ]; then
     echo "Found existing devbox.json, running devbox install..."
@@ -100,11 +110,9 @@ else
     devbox init
 fi
 
-# Fix ownership of devbox directories to ensure the remote user can access them
-# The devbox data directory follows XDG Base Directory spec: ${HOME}/.local/share/devbox
-if [ -d "${HOME}/.local/share/devbox" ]; then
-    sudo chown -R "${USER}:${USER}" "${HOME}/.local/share/devbox"
-fi
+# Fix ownership AFTER devbox/nix operations complete
+# nix-daemon runs as root and creates files with root ownership
+fix_feature_volume_ownership
 EOF
   chmod +x "$devcontainer_postCreateCommand"
   log_success "Created postCreateCommand script"
@@ -116,9 +124,9 @@ EOF
 setup_shell_integration() {
   log_info "Setting up shell integration"
 
-  # Ensure XDG_DATA_HOME directory exists for both users
+  # Ensure XDG_DATA_HOME and devbox global directories exist for both users
   # Root user
-  mkdir -p "/root/.local/share"
+  mkdir -p "/root/.local/share/devbox/global/default"
 
   # Remote user (if different from root)
   local remote_user
@@ -126,7 +134,7 @@ setup_shell_integration() {
   if [ "$remote_user" != "root" ]; then
     local remote_user_home
     remote_user_home=$(get_remote_user_home)
-    mkdir -p "${remote_user_home}/.local/share"
+    mkdir -p "${remote_user_home}/.local/share/devbox/global/default"
     chown -R "$remote_user:$remote_user" "${remote_user_home}/.local"
   fi
 

@@ -1,6 +1,6 @@
 {
     "custom_theme": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "oh-my-posh": {
                 "theme": "agnoster"

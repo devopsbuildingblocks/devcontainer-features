@@ -1,6 +1,6 @@
 {
     "custom_version": {
-        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.5",
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6",
         "features": {
             "devbox": {
                 "version": "0.15.0"
