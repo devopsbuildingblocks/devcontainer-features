@@ -39,10 +39,10 @@ jobs:
           for feature in $changed_features; do
             case "$feature" in
               lib|common-utils)
-                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-base:0.1.4"
+                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-base:0.1.9"
                 ;;
               *)
-                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.6"
+                base_image="ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11"
                 ;;
             esac
             if [ "$first" = true ]; then
