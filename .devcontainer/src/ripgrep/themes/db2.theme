@@ -1,0 +1,10 @@
+# db2 theme for ripgrep
+# Uses ANSI colors mapped to DevOpsBuildingBlocks palette
+# Red (match), Blue (path), Yellow (line), Green (column)
+
+path:fg:blue
+path:style:bold
+line:fg:yellow
+column:fg:green
+match:fg:red
+match:style:bold

@@ -16,10 +16,9 @@
             "type": "string",
             "proposals": [
                 "none",
-                "db2-dark",
-                "db2-light"
+                "db2"
             ],
-            "default": "db2-dark",
+            "default": "db2",
             "description": "Color theme for ripgrep output"
         },
         "smartCase": {
