@@ -18,6 +18,7 @@ Installs lazygit, a simple terminal UI for git commands, via devbox global
 | version | Version of lazygit to install | string | latest |
 | theme | Color theme for lazygit UI (includes branchColors and theme configuration) | string | db2-dark |
 | enableGitDiffPager | Enable pager for git diff viewing in lazygit | boolean | false |
+| enableFileIcons | Show file icons in lazygit (requires a Nerd Font) | boolean | false |
 
 ### Dependencies
 

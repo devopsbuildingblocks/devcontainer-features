@@ -15,7 +15,7 @@ task test
 # Test a specific feature
 task test -- <feature-name>
 
-# Generate feature documentation (run from .devcontainer/src)
+# Generate feature documentation
 task docs
 
 # Validate bash scripts
@@ -200,6 +200,26 @@ Features can persist configuration across container rebuilds using volume mounts
 - Breaking changes: increment major version (e.g., 0.3.0 → 1.0.0)
 
 If changes affect shared code in `lib/common.sh`, also bump the `lib` feature version.
+
+### Documentation
+
+**IMPORTANT:** After creating or modifying a feature, you MUST regenerate the documentation:
+
+```sh
+task docs
+```
+
+This generates the `README.md` files for each feature based on their `devcontainer-feature.json`.
+
+### Testing
+
+**IMPORTANT:** After creating or modifying a feature, you MUST run the tests:
+
+```sh
+task test -- <feature-name>
+```
+
+All tests must pass before the feature is considered complete.
 
 ### Function Naming Convention
 

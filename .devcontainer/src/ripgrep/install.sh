@@ -13,7 +13,7 @@ source /usr/local/lib/devcontainer-features/common.sh
 
 # Feature options (passed as environment variables from devcontainer)
 VERSION="${VERSION:-latest}"
-THEME="${THEME:-db2-dark}"
+THEME="${THEME:-db2}"
 SMARTCASE="${SMARTCASE:-true}"
 ENABLEALIASES="${ENABLEALIASES:-true}"
 
@@ -76,8 +76,8 @@ get_theme_colors() {
     fi
 
     if [ ! -f "$theme_file" ]; then
-        log_warning "Theme file not found: $theme_file, using db2-dark as fallback"
-        theme_file="${themes_dir}/db2-dark.theme"
+        log_warning "Theme file not found: $theme_file, using db2 as fallback"
+        theme_file="${themes_dir}/db2.theme"
     fi
 
     if [ -f "$theme_file" ]; then
@@ -199,9 +199,8 @@ rg-themes() {
     local themes_dir="/usr/local/share/devcontainer-features/ripgrep/themes"
 
     echo "Available ripgrep themes:"
-    echo "  db2-dark   - DevOpsBuildingBlocks dark theme (default)"
-    echo "  db2-light  - DevOpsBuildingBlocks light theme"
-    echo "  none       - No theme (use terminal defaults)"
+    echo "  db2    - DevOpsBuildingBlocks theme (default)"
+    echo "  none   - No theme (use terminal defaults)"
     echo ""
     echo "Current theme: ${CURRENT_RG_THEME:-unknown}"
     echo ""
