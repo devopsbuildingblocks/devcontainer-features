@@ -1,0 +1,10 @@
+# db2-dark theme for ripgrep
+# Colors from DevOpsBuildingBlocks oh-my-posh theme
+# Red #E35F6A, Blue #4A90C8, Yellow #E8C468, Green #98C379
+
+path:fg:#4A90C8
+path:style:bold
+line:fg:#E8C468
+column:fg:#98C379
+match:fg:#E35F6A
+match:style:bold
