@@ -98,12 +98,6 @@ source /usr/local/lib/devcontainer-features/common.sh
 # Volume mounts may be root-owned initially
 fix_feature_volume_ownership
 
-# Fix /nix volume mount ownership
-# The /nix volume starts as root-owned which causes permission errors
-if [ -d /nix ]; then
-    sudo chown -R "${USER}:${USER}" /nix 2>/dev/null || true
-fi
-
 # Ensure devbox global directories exist with correct ownership
 mkdir -p "${HOME}/.local/share/devbox/global/default"
 
