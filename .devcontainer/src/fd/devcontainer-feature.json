@@ -1,0 +1,24 @@
+{
+    "name": "fd",
+    "id": "fd",
+    "version": "0.1.0",
+    "description": "Installs fd, a simple, fast and user-friendly alternative to find, via devbox global",
+    "documentationURL": "https://github.com/sharkdp/fd",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "10", "10.2", "10.2.0"],
+            "default": "latest",
+            "description": "Version of fd to install"
+        },
+        "enableAliases": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable useful fd aliases (fdi, fdh, fda, fde)"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
+}
