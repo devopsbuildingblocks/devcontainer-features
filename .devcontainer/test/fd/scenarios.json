@@ -1,0 +1,10 @@
+{
+    "no_aliases": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11",
+        "features": {
+            "fd": {
+                "enableAliases": false
+            }
+        }
+    }
+}
