@@ -1,0 +1,39 @@
+{
+    "name": "ripgrep",
+    "id": "ripgrep",
+    "version": "0.1.0",
+    "description": "Installs ripgrep (rg), a fast line-oriented search tool, via devbox global",
+    "documentationURL": "https://github.com/BurntSushi/ripgrep",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "14", "14.1", "14.1.1"],
+            "default": "latest",
+            "description": "Version of ripgrep to install"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": [
+                "none",
+                "db2-dark",
+                "db2-light"
+            ],
+            "default": "db2-dark",
+            "description": "Color theme for ripgrep output"
+        },
+        "smartCase": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable smart case searching (case-insensitive unless uppercase used)"
+        },
+        "enableAliases": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable useful rg aliases (rgi, rgf, rgh)"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
+}

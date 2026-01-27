@@ -1,0 +1,26 @@
+{
+    "db2_light_theme": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11",
+        "features": {
+            "ripgrep": {
+                "theme": "db2-light"
+            }
+        }
+    },
+    "no_theme": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11",
+        "features": {
+            "ripgrep": {
+                "theme": "none"
+            }
+        }
+    },
+    "no_aliases": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11",
+        "features": {
+            "ripgrep": {
+                "enableAliases": false
+            }
+        }
+    }
+}
