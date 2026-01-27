@@ -1,0 +1,34 @@
+{
+    "name": "K9s",
+    "id": "k9s",
+    "version": "0.1.0",
+    "description": "Installs k9s, a terminal UI for Kubernetes clusters, via devbox global",
+    "documentationURL": "https://github.com/derailed/k9s",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "0", "0.32", "0.32.7"],
+            "default": "latest",
+            "description": "Version of k9s to install"
+        },
+        "theme": {
+            "type": "string",
+            "proposals": [
+                "db2-dark",
+                "db2",
+                "default",
+                "nord",
+                "dracula",
+                "one-dark",
+                "gruvbox-dark",
+                "solarized-dark"
+            ],
+            "default": "db2-dark",
+            "description": "Color theme/skin for k9s UI"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
+}

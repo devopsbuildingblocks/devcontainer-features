@@ -1,0 +1,18 @@
+{
+    "custom_theme": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11",
+        "features": {
+            "k9s": {
+                "theme": "dracula"
+            }
+        }
+    },
+    "nord_theme": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11",
+        "features": {
+            "k9s": {
+                "theme": "nord"
+            }
+        }
+    }
+}
