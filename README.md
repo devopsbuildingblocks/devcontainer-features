@@ -17,6 +17,8 @@ create modern, flexible development environments using
 - [devbox](.devcontainer/src/devbox): Instant, easy, and predictable development
   environments based on Nix packages.
 - [eza](.devcontainer/src/eza): A modern replacement for ls.
+- [fd](.devcontainer/src/fd): A simple, fast and user-friendly alternative to
+  find.
 - [fzf](.devcontainer/src/fzf): A command-line fuzzy finder (try using ctl+r and
   ctl+t).
 - [gemini](.devcontainer/src/gemini): An AI assistant from Google (terminal
