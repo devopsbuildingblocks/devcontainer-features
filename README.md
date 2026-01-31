@@ -21,10 +21,12 @@ create modern, flexible development environments using
   ctl+t).
 - [gemini](.devcontainer/src/gemini): An AI assistant from Google (terminal
   based AI and vscode extension).
+- [k9s](.devcontainer/src/k9s): A terminal UI for Kubernetes clusters.
 - [lazygit](.devcontainer/src/lazygit): A terminal UI (TUI) for git.
 - [lib](.devcontainer/src/lib): A library of common functions for dev container
   features.
 - [oh-my-posh](.devcontainer/src/oh-my-posh): A prompt theme engine.
+- [ripgrep](.devcontainer/src/ripgrep): A fast line-oriented search tool.
 
 ## Usage
 
