@@ -108,13 +108,15 @@ setup_config_for_user() {
 k9s:
   liveViewAutoRefresh: true
   refreshRate: 2
+  namespace:
+    active: all
   maxConnRetry: 5
   readOnly: false
   noExitOnCtrlC: false
   ui:
     enableMouse: false
-    headless: false
-    logoless: false
+    headless: true
+    logoless: true
     crumbsless: false
     reactive: false
     noIcons: false
