@@ -24,12 +24,15 @@ k9s:
   body:
     fgColor: *foreground
     bgColor: *background
-    logoColor: *blue
+    logoColor: *red
   # Command prompt styles
   prompt:
     fgColor: *foreground
     bgColor: *background
     suggestColor: *yellow
+    border:
+      command: *green
+      default: *green
   # ClusterInfoView styles.
   info:
     fgColor: *blue
@@ -38,9 +41,9 @@ k9s:
   help:
     fgColor: *foreground
     bgColor: *background
-    keyColor: *yellow
+    keyColor: *blue
     numKeyColor: *blue
-    sectionColor: *green
+    sectionColor: *yellow
   # Dialog styles.
   dialog:
     fgColor: *foreground
@@ -54,8 +57,8 @@ k9s:
   frame:
     # Borders styles.
     border:
-      fgColor: *selection
-      focusColor: *blue
+      fgColor: *red
+      focusColor: *red
     menu:
       fgColor: *foreground
       keyColor: *yellow
@@ -68,9 +71,9 @@ k9s:
       activeColor: *blue
     # Resource status and update styles
     status:
-      newColor: *cyan
-      modifyColor: *blue
-      addColor: *green
+      newColor: *blue
+      modifyColor: *cyan
+      addColor: *blue
       pendingColor: *orange
       errorColor: *red
       highlightColor: *yellow
@@ -102,9 +105,10 @@ k9s:
       markColor: *yellow
       # Header row styles.
       header:
-        fgColor: *comment
+        # fgColor: *comment
+        fgColor: *yellow
         bgColor: *background
-        sorterColor: *yellow
+        sorterColor: *green
     # Xray view attributes.
     xray:
       fgColor: *foreground
@@ -123,6 +127,6 @@ k9s:
       bgColor: *background
       indicator:
         fgColor: *foreground
-        bgColor: *blue
+        bgColor: *background
         toggleOnColor: *green
         toggleOffColor: *comment

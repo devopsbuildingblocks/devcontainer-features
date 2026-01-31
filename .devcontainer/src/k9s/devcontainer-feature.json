@@ -1,7 +1,7 @@
 {
     "name": "K9s",
     "id": "k9s",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Installs k9s, a terminal UI for Kubernetes clusters, via devbox global",
     "documentationURL": "https://github.com/derailed/k9s",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
