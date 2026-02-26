@@ -375,6 +375,25 @@ SCRIPT_HEADER
 if [ -d /mnt/devcontainer-features/${feature_name} ]; then
   sudo chown -R \${USER}:\${USER} /mnt/devcontainer-features/${feature_name}
 
+  # Helper function to detect if a path is already a user-provided bind mount
+  is_user_bind_mount() {
+    local path="\$1"
+    local full_path
+    full_path=\$(readlink -f "\$path" 2>/dev/null || echo "\$path")
+
+    # Check if it's a mountpoint (works for directories)
+    if mountpoint -q "\$full_path" 2>/dev/null; then
+      return 0
+    fi
+
+    # Check /proc/mounts for file bind mounts
+    if [ -f "\$full_path" ] && grep -q " \${full_path} " /proc/mounts 2>/dev/null; then
+      return 0
+    fi
+
+    return 1
+  }
+
 SCRIPT_BODY
 
     # Add logic for each path
@@ -385,29 +404,37 @@ SCRIPT_BODY
             # It's a file
             cat >> "$script_path" <<SCRIPT_FILE
   # Setup ${path} (file)
-  if [ ! -f /mnt/devcontainer-features/${feature_name}/${path} ]; then
-    echo "{}" > /mnt/devcontainer-features/${feature_name}/${path}
+  if is_user_bind_mount ~/${path}; then
+    echo "Skipping ${path} - user-provided bind mount detected"
+  else
+    if [ ! -f /mnt/devcontainer-features/${feature_name}/${path} ]; then
+      echo "{}" > /mnt/devcontainer-features/${feature_name}/${path}
+    fi
+    if [ -f ~/${path} ] && [ ! -L ~/${path} ]; then
+        rm ~/${path}
+    fi
+    ln -sf /mnt/devcontainer-features/${feature_name}/${path} ~/${path}
   fi
-  if [ -f ~/${path} ] && [ ! -L ~/${path} ]; then
-      rm ~/${path}
-  fi
-  ln -sf /mnt/devcontainer-features/${feature_name}/${path} ~/${path}
 
 SCRIPT_FILE
         else
             # Treat as directory
             cat >> "$script_path" <<SCRIPT_DIR
   # Setup ${path} (directory)
-  if [ ! -d /mnt/devcontainer-features/${feature_name}/${path} ]; then
-    mkdir -p /mnt/devcontainer-features/${feature_name}/${path}
+  if is_user_bind_mount ~/${path}; then
+    echo "Skipping ${path} - user-provided bind mount detected"
+  else
+    if [ ! -d /mnt/devcontainer-features/${feature_name}/${path} ]; then
+      mkdir -p /mnt/devcontainer-features/${feature_name}/${path}
+    fi
+    # Merge existing content into volume mount
+    if [ -d ~/${path} ] && [ ! -L ~/${path} ]; then
+        sudo cp -r ~/${path}/* /mnt/devcontainer-features/${feature_name}/${path}/ 2>/dev/null || true
+        sudo chown -R \${USER}:\${USER} /mnt/devcontainer-features/${feature_name}/${path}
+        sudo rm -rf ~/${path}
+    fi
+    ln -sf /mnt/devcontainer-features/${feature_name}/${path} ~/${path}
   fi
-  # Merge existing content into volume mount
-  if [ -d ~/${path} ] && [ ! -L ~/${path} ]; then
-      sudo cp -r ~/${path}/* /mnt/devcontainer-features/${feature_name}/${path}/ 2>/dev/null || true
-      sudo chown -R \${USER}:\${USER} /mnt/devcontainer-features/${feature_name}/${path}
-      sudo rm -rf ~/${path}
-  fi
-  ln -sf /mnt/devcontainer-features/${feature_name}/${path} ~/${path}
 
 SCRIPT_DIR
         fi
