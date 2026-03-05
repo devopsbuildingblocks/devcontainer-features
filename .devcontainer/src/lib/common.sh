@@ -381,13 +381,26 @@ if [ -d /mnt/devcontainer-features/${feature_name} ]; then
     local full_path
     full_path=\$(readlink -f "\$path" 2>/dev/null || echo "\$path")
 
-    # Check if it's a mountpoint (works for directories)
-    if mountpoint -q "\$full_path" 2>/dev/null; then
-      return 0
+    # Path must exist to be a mount
+    [ -e "\$full_path" ] || return 1
+
+    # Method 1: findmnt --mountpoint (checks exact mount point, not just containing fs)
+    if command -v findmnt >/dev/null 2>&1; then
+      if findmnt --mountpoint "\$full_path" >/dev/null 2>&1; then
+        return 0
+      fi
     fi
 
-    # Check /proc/mounts for file bind mounts
-    if [ -f "\$full_path" ] && grep -q " \${full_path} " /proc/mounts 2>/dev/null; then
+    # Method 2: mountpoint command
+    if command -v mountpoint >/dev/null 2>&1; then
+      if mountpoint -q "\$full_path" 2>/dev/null; then
+        return 0
+      fi
+    fi
+
+    # Method 3: Parse /proc/self/mountinfo field 5 (mount point path) with awk
+    # This works for all mount types including Docker Desktop VirtioFS/FUSE mounts
+    if awk -v p="\$full_path" 'BEGIN{f=0} \$5==p{f=1;exit} END{exit !f}' /proc/self/mountinfo 2>/dev/null; then
       return 0
     fi
 
