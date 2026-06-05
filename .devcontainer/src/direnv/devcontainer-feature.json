@@ -1,0 +1,19 @@
+{
+    "name": "direnv",
+    "id": "direnv",
+    "version": "0.1.0",
+    "description": "Installs direnv, an environment switcher for the shell, via devbox global and whitelists /workspaces",
+    "documentationURL": "https://direnv.net",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "2", "2.35", "2.35.0"],
+            "default": "latest",
+            "description": "Version of direnv to install"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
+}
