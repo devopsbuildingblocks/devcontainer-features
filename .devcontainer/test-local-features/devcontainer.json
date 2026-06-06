@@ -1,0 +1,13 @@
+{
+    "name": "Test Local Features",
+    "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-toolbox:0.1.5",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "../src/direnv": {},
+        "../src/kubectl": {},
+        "../src/helm": {},
+        "../src/terragrunt": {},
+        "../src/awscli2": {}
+    },
+    "postStartCommand": ""
+}

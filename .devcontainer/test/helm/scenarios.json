@@ -1,0 +1,8 @@
+{
+    "default": {
+        "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-devbox:0.1.11",
+        "features": {
+            "helm": {}
+        }
+    }
+}

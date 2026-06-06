@@ -1,0 +1,19 @@
+{
+    "name": "awscli2",
+    "id": "awscli2",
+    "version": "0.1.0",
+    "description": "Installs AWS CLI v2, the official command-line interface for Amazon Web Services, via devbox global with shell completion",
+    "documentationURL": "https://docs.aws.amazon.com/cli/latest/userguide/",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "2", "2.22", "2.22.0"],
+            "default": "latest",
+            "description": "Version of AWS CLI v2 to install"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "helm",
+    "id": "helm",
+    "version": "0.1.0",
+    "description": "Installs Helm, the Kubernetes package manager, via devbox global with shell completion",
+    "documentationURL": "https://helm.sh",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "3", "3.17", "3.17.0"],
+            "default": "latest",
+            "description": "Version of Helm to install"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
+}

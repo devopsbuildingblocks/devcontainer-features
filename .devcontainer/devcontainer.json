@@ -1,6 +1,6 @@
 {
     "name": "DB2 - Dev Container Features",
-    "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-toolbox-nf:0.1.3",
+    "image": "ghcr.io/devopsbuildingblocks/devcontainer-images/ubuntu-toolbox:0.1.5",
     "customizations": {
         "vscode": {
             "settings": {

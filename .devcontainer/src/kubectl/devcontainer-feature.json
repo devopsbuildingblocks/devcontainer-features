@@ -1,0 +1,19 @@
+{
+    "name": "kubectl",
+    "id": "kubectl",
+    "version": "0.1.0",
+    "description": "Installs kubectl, the Kubernetes command-line tool, via devbox global with shell completion",
+    "documentationURL": "https://kubernetes.io/docs/reference/kubectl/",
+    "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": ["latest", "1", "1.32", "1.32.0"],
+            "default": "latest",
+            "description": "Version of kubectl to install"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devopsbuildingblocks/devcontainer-features/devbox"
+    ]
+}
