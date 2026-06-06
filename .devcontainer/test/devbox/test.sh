@@ -23,6 +23,9 @@ check ".local/share directory exists" test -d "$HOME/.local/share"
 # Test 6: devbox global directory structure exists
 check "devbox global directory exists" test -d "$HOME/.local/share/devbox/global/default"
 
+# Test 7: Shell integration contains completion
+check "shell integration contains devbox completion" grep -q "devbox completion" "$HOME/.shellrc.d/devbox-feature.sh"
+
 # Note: We don't test 'devbox global list' here because it requires nix-daemon
 # which has permission issues with volume mounts in the test environment.
 # The nix integration is tested implicitly through the custom_version scenario

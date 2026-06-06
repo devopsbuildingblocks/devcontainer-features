@@ -155,6 +155,13 @@ if command -v devbox >/dev/null 2>&1; then
     # --init-hook runs initialization hooks for a proper setup
     # This also creates the 'refresh-global' alias to update the PATH after adding packages
     eval "$(devbox global shellenv --init-hook)"
+
+    # Shell completion
+    if [ -n "$ZSH_VERSION" ]; then
+        source <(devbox completion zsh)
+    elif [ -n "$BASH_VERSION" ]; then
+        source <(devbox completion bash)
+    fi
 fi
 EOF
 )
