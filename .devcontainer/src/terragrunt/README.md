@@ -1,7 +1,7 @@
 
 # terragrunt (terragrunt)
 
-Installs Terragrunt, a thin wrapper for Terraform/OpenTofu, via devbox global with shell completion
+Installs Terragrunt, the open source IaC orchestrator platform teams trust, via devbox global with shell completion
 
 ## Example Usage
 

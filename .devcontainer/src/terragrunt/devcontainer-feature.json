@@ -2,7 +2,7 @@
     "name": "terragrunt",
     "id": "terragrunt",
     "version": "0.1.0",
-    "description": "Installs Terragrunt, a thin wrapper for Terraform/OpenTofu, via devbox global with shell completion",
+    "description": "Installs Terragrunt, the open source IaC orchestrator platform teams trust, via devbox global with shell completion",
     "documentationURL": "https://terragrunt.gruntwork.io",
     "licenseURL": "https://github.com/devopsbuildingblocks/devcontainer-features/blob/main/LICENSE",
     "options": {
